@@ -1,0 +1,18 @@
+html {
+  font-size: 20px;
+  font-size: (20 / 375) * 100vw;
+
+  @media screen and (max-width: 320px) {
+    font-size: 16;
+  }
+  @media screen and (min-width: 540px) {
+    font-size: 28px;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #f6f6f6;
+}
