@@ -1,0 +1,36 @@
+.inputBox{
+  position: relative;  
+}
+.inputDelete{
+    position: absolute;
+    top:3px;
+    right:15px;
+    background: red;
+    border: none;
+    color: #fff;
+    width: 60px;
+    height: 40px;
+}
+.inputBox[index='0'] .inputDelete{
+  display: none;
+}
+.confirm {
+  &_btn {
+    padding: 0 15px;
+    margin-top: 20px;
+  }
+
+  &_add {
+    float: right;
+    padding: 10px 15px;
+    line-height: 24px;
+    font-size: 12px;
+    button {
+      color: #666;
+      padding:5px 10px;
+      border-radius: 4px;
+      border:1px solid #ccc;
+      background: #fff;
+    }
+  }
+}

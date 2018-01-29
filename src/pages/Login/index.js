@@ -39,11 +39,11 @@ class Login extends Component {
     const { username, password, remember } = this.state
     const { actions } = this.props
     if (!username) { Toast.warn('请输入用户名'); return }
-    if (!password) { Toast.warn('请输入密码'); return }
+    if (!password) { Toast.warn('请en 输入密码'); return }
     actions.fetchLogin({ username, password, remember })
   }
 
-  render() {
+  render () {
     const { username, password, remember } = this.state
     return (
       <div>
@@ -54,17 +54,17 @@ class Login extends Component {
         <Form className={styles.login_remember} checkbox>
           <FormCell checkbox className={styles.login_remember_checkbox}>
             <CellHeader>
-              <Checkbox name="remember" checked={remember} onChange={this.handleOnChange}/>
+              <Checkbox name='remember' checked={remember} onChange={this.handleOnChange} />
             </CellHeader>
             <CellBody>记住密码</CellBody>
           </FormCell>
           <div className={styles.login_forget} onClick={this.showForget}><span>忘记密码？</span></div>
         </Form>
-        
+
         <div className={styles.login_btn}>
           <Button type='primary' onClick={this.triggerLogin}>登录</Button>
         </div>
-        
+
       </div>
     )
   }
