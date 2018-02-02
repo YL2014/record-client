@@ -12,6 +12,7 @@ import App from 'Pages/App'
 import Login from 'Pages/Login'
 import Category from 'Pages/Category'
 import CategoryList from 'Pages/Category/CategoryList.js'
+import ChangeCategory from 'Pages/Category/ChangeCategory.js'
 
 const Root = ({ store, history }) => (
   <Provider store={store}>
@@ -21,6 +22,7 @@ const Root = ({ store, history }) => (
         <Route path='/login' component={Login} />
         <Route path='/category' component={Category} />
         <Route path='/categoryList' component={CategoryList} />
+        <Route path='/changeCategory' component={ChangeCategory} />
       </Base>
     </ConnectedRouter>
   </Provider>

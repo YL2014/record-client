@@ -7,12 +7,12 @@ export default class InputWithLabel extends Component {
   render () {
     const { label, name, placeholder, value, onChange, ...res } = this.props
     return <FormCell>
-    <CellHeader>
-      <Label>{label}</Label>
-    </CellHeader>
-    <CellBody>
-      <Input name={name} value={value} placeholder={placeholder} onChange={onChange} {...res} />
-    </CellBody>
-  </FormCell>
+      <CellHeader>
+        <Label>{label}</Label>
+      </CellHeader>
+      <CellBody>
+        <Input name={name} value={value} placeholder={placeholder} onChange={onChange} {...res} />
+      </CellBody>
+    </FormCell>
   }
 }

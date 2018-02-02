@@ -7,11 +7,11 @@ import LinkList from 'Gb/components/LinkList'
 
 import styles from './index.scss'
 
-class CategoryList extends Component {
+class ChangeCategory extends Component {
   constructor () {
     super()
     this.state = {
-      categoryList: [{to:'/ChangeCategory',title:'aa'}]
+      categoryList: ['aa', 'bb']
     }
   }
 
@@ -19,8 +19,10 @@ class CategoryList extends Component {
     const { categoryList } = this.state
     return (
       <div>
-        <ul className={styles.confirm_List}>         
-          <LinkList dataSource={categoryList}/>
+        <ul className={styles.confirm_List}>
+          {categoryList.map((val, num) =>
+            <LinkList linkAddress='/ChangeCategory' title={val} key={num} />
+          )}
         </ul>
         <div className={styles.confirm_btn}>
           <Button type='primary' onClick={this.triggerAdd}>确认</Button>
@@ -30,4 +32,4 @@ class CategoryList extends Component {
   }
 }
 
-export default CategoryList
+export default ChangeCategory
