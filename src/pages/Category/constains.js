@@ -1,3 +1,7 @@
+export const INIT_LIST = 'INIT_LIST'
+
 export const API = {
-  add: '/category/add'
+  list: '/category',
+  add: '/category/add',
+  update: '/category/update'
 }

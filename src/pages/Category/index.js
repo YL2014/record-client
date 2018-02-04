@@ -1,92 +1,62 @@
 import React, { Component } from 'react'
-import { Form, Button } from 'react-weui'
-import InputWithLabel from 'Gb/components/InputWithLabel'
-import Toast from 'Gb/components/Toast'
-import ajax from 'Gb/utils/ajax'
-import { API } from './constains'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { CellsTitle } from 'react-weui'
+import List from 'Gb/components/List'
+import categoryActions from './actions'
 
 import styles from './index.scss'
 
-class Category extends Component {
+class CategoryList extends Component {
   constructor () {
     super()
     this.state = {
-      categoryList: ['']
+      categoryList: [{to:'/ChangeCategory',title:'aa'}]
     }
-    this.handleOnChange = this.handleOnChange.bind(this)
-    this.addOneLine = this.addOneLine.bind(this)
-    this.deleteOneLine = this.deleteOneLine.bind(this)
-    this.triggerAdd = this.triggerAdd.bind(this)
+    this.filterList = this.filterList.bind(this)
   }
 
-  handleOnChange (e) {
-    const target = e.target
-    const name = target.name
-    const value = target.type === 'checkbox' ? target.checked : target.value
-    const category = this.state.categoryList
-    category[Number(name)] = value
-    this.setState({
-      categoryList: category
+  filterList () {
+    const { list } = this.props.category
+    if (!list) return null
+    return list.map(item => {
+      return {
+        to: {
+          path: '/category/detail',
+          state: item
+        },
+        title: item.name
+      } 
     })
   }
-  addOneLine () {
-    const category = this.state.categoryList
-    category.push('')
-    this.setState({
-      categoryList: category
-    })
-  }
-  deleteOneLine (e) {
-    const category = this.state.categoryList
-    const deleteIndex = e.target.dataset.index
-    category.splice(deleteIndex, 1)
-    this.setState({
-      categoryList: category
-    })
-  }
-  triggerAdd () {
-    const category = this.state.categoryList
-    const categoryValue = []
-    category.forEach((ele) => ele.trim() !== '' ? categoryValue.push(ele) : '')
-    if (categoryValue.length > 0) {
-      this.addAjax(categoryValue)
-    } else {
-      Toast.error('请至少输入一个分类')
-    }
-  }
-  async addAjax (arr) {
-    const data = await ajax.post(API.add, {
-      name: arr
-    })
-    if (data) {
-      Toast.success('添加分类成功')
-      setTimeout(() => {
-        // 路由跳转到列表页
-      }, 1000)
-    }
+
+  componentDidMount () {
+    const { fetchList } = this.props.actions
+    fetchList && fetchList()
   }
 
   render () {
-    const { categoryList } = this.state
-    console.log(categoryList)
+    let list = this.filterList()
     return (
       <div>
-        <Form>
-          {categoryList.map((val, num) =>
-            <div className={styles.inputBox} key={`category${num}`} index={num}>
-              <InputWithLabel name={num} value={categoryList[num]} label='分类名称' placeholder='请输入分类名称' onChange={this.handleOnChange} />
-              <button className={styles.inputDelete} onClick={this.deleteOneLine} data-index={num}>删除</button>
-            </div>
-          )}
-        </Form>
-        <div className={styles.confirm_add} onClick={this.addOneLine}><button>添加一组</button></div>
-        <div className={styles.confirm_btn}>
-          <Button type='primary' onClick={this.triggerAdd}>确认添加</Button>
-        </div>
-
+        <CellsTitle>商品分类列表</CellsTitle>
+        <ul className={styles.confirm_List}>         
+          <List dataSource={list}/>
+        </ul>
       </div>
     )
   }
 }
 
-export default Category
+
+const mapStateToProps = ({ category }) => {
+  return { category }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(categoryActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryList)

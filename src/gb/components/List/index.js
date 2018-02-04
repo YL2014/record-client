@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { CellHeader, CellBody, CellFooter } from 'react-weui'
-import { Link } from 'react-router-dom'
+import { Cell, CellHeader, CellBody, CellFooter } from 'react-weui'
 import './index.scss'
 
 export default class LinkList extends Component {
@@ -11,14 +10,14 @@ export default class LinkList extends Component {
     return <div className={className} {...other}>
       {
         dataSource && dataSource.map((item,index) => {
-          const { to, title, desc, icon, ...res } = item
-          return to &&  <Link className='weui-cell weui-cell_access' to={to} {...res} key={index}>
-            {icon && <CellHeader>
-              <img src={icon} className='gb_linklist_icon'alt='icon' />
-            </CellHeader>}
+          const { title, desc, icon, ...res } = item
+          return <Cell {...res} key={index}>
+            { icon && <CellHeader>
+              <img src={icon} className='gb_list_icon' alt='icon'/>
+            </CellHeader> }
             <CellBody>{title}</CellBody>
-            { desc ? <CellFooter>{desc}</CellFooter> : <CellFooter /> }
-          </Link>
+            { desc && <CellFooter>{desc}</CellFooter> }
+          </Cell>
         })
       }
     </div>

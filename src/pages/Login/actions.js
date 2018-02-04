@@ -1,7 +1,6 @@
 import ajax from 'Gb/utils/ajax'
 import { push } from 'react-router-redux'
 
-
 import {
   // LOGIN_FETCH,
   LOGIN_SUCCESS,
@@ -21,7 +20,8 @@ const fetchLogin = (params) => {
         type: LOGIN_SUCCESS,
         data
       })
-      dispatch(push('/'))
+      localStorage.setItem('user', JSON.stringify(data))
+      dispatch(push('/user'))
     }
   }
 }

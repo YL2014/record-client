@@ -1,9 +1,10 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-// import {
-//   BrowserRouter,
-//   Route
-// } from 'react-router-dom'
+import {
+  // BrowserRouter,
+  // Route,
+  Redirect
+} from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import { Route } from 'react-router'
 
@@ -11,18 +12,56 @@ import Base from 'Gb/components/Base'
 import App from 'Pages/App'
 import Login from 'Pages/Login'
 import Category from 'Pages/Category'
-import CategoryList from 'Pages/Category/CategoryList.js'
-import ChangeCategory from 'Pages/Category/ChangeCategory.js'
+import CategoryAdd from 'Pages/Category/add.js'
+import CategoryUpdate from 'Pages/Category/update.js'
+import User from 'Pages/User'
+import Manage from 'Pages/Manage'
+import Goods from 'Pages/Goods'
+
+const adminPath = ['/manage', '/goods', '/goodsadd', '/goodsupdate',
+  '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck']
+const zongPath = ['/ordercheck', '/usercheck']
+
+// 权限认证
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  let isAuth = true
+  let user = localStorage.getItem('user')
+  if (!user) {
+    isAuth = false
+  }
+  user = user && JSON.parse(user)
+  return <Route {...rest} render={props => {
+    // if (isAuth && props.location.pathname == '/login') {
+    //   return <Redirect to={{
+    //     pathname: '/'
+    //   }} />
+    // }
+    const pathname = props.location.pathname
+    if (adminPath.indexOf(pathname) > -1 && user.role !== 1) isAuth = false
+    if (zongPath.indexOf(pathname) > -1 && user.role !== 2) isAuth = false
+    return (!isAuth && pathname !== '/login') ? (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }} />
+    ) : (
+      <Component {...props} />
+    )
+  }} />
+}
 
 const Root = ({ store, history }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Base>
-        <Route exact path='/' component={App} />
-        <Route path='/login' component={Login} />
-        <Route path='/category' component={Category} />
-        <Route path='/categoryList' component={CategoryList} />
-        <Route path='/changeCategory' component={ChangeCategory} />
+        <PrivateRoute exact path='/' component={App} />
+        <PrivateRoute path='/login' component={Login} />
+        <PrivateRoute path='/category' component={Category} />
+        <PrivateRoute path='/categoryadd' component={CategoryAdd} />
+        <PrivateRoute path='/categoryupdate' component={CategoryUpdate} />
+        <PrivateRoute path='/user' component={User} />
+        <PrivateRoute path='/manage' component={Manage} />
+        <PrivateRoute path='/goods' component={Goods} />
       </Base>
     </ConnectedRouter>
   </Provider>
