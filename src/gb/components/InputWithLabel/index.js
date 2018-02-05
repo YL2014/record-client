@@ -5,13 +5,13 @@ import { FormCell, CellHeader, CellBody, Label, Input } from 'react-weui'
 
 export default class InputWithLabel extends Component {
   render () {
-    const { label, name, placeholder, value, onChange, ...res } = this.props
+    const { label, name, placeholder = '', value = '', type = 'text', onChange, ...res } = this.props
     return <FormCell>
       <CellHeader>
         <Label>{label}</Label>
       </CellHeader>
       <CellBody>
-        <Input name={name} value={value} placeholder={placeholder} onChange={onChange} {...res} />
+        <Input type={type} name={name} value={value} placeholder={placeholder} onChange={onChange} {...res} />
       </CellBody>
     </FormCell>
   }

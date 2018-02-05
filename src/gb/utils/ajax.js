@@ -23,7 +23,7 @@ axios.interceptors.response.use(function (response) {
       Toast(data.message)
       // 清除登陆信息
       localStorage.clear()
-      return Promise.reject(data)
+      return Promise.resolve(null)
     } else {
       Toast(data.message)
       return Promise.resolve(null)
@@ -33,10 +33,19 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
   console.log(error)
   Toast('网络异常，请稍后再试')
-  return Promise.reject(null)
+  return Promise.resolve(null)
 })
 
 const ajax = {}
+
+// 文件上传
+ajax.upload = (url, params) => {
+  return axios.post(url, params, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
 
 ajax.get = (url, params) => {
   return axios.get(url, {
@@ -47,8 +56,17 @@ ajax.get = (url, params) => {
 ajax.post = (url, params) => {
   return axios(url, {
     method: 'post',
-    data: qs.stringify(params)
+    // data: qs.stringify(params),
+    data: params
+    // header: {
+    //   'Content-Type': 'application/x-www-form-urlencoded'
+    // }
   })
+  // return axios.post(url, qs.stringify(params), {
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded'
+  //   }
+  // })
 }
 
 export default ajax

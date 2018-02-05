@@ -17,6 +17,7 @@ import CategoryUpdate from 'Pages/Category/update.js'
 import User from 'Pages/User'
 import Manage from 'Pages/Manage'
 import Goods from 'Pages/Goods'
+import GoodsAdd from 'Pages/Goods/add'
 
 const adminPath = ['/manage', '/goods', '/goodsadd', '/goodsupdate',
   '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck']
@@ -62,6 +63,7 @@ const Root = ({ store, history }) => (
         <PrivateRoute path='/user' component={User} />
         <PrivateRoute path='/manage' component={Manage} />
         <PrivateRoute path='/goods' component={Goods} />
+        <PrivateRoute path='/goodsadd' component={GoodsAdd} />
       </Base>
     </ConnectedRouter>
   </Provider>
