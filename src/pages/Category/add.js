@@ -6,6 +6,7 @@ import InputWithLabel from 'Gb/components/InputWithLabel'
 import Toast from 'Gb/components/Toast'
 import ajax from 'Gb/utils/ajax'
 import { API } from './constains'
+import { close } from 'Gb/icons'
 
 import styles from './index.scss'
 
@@ -76,7 +77,7 @@ class Category extends Component {
           {categoryList.map((val, num) =>
             <div className={styles.inputBox} key={`category${num}`} index={num}>
               <InputWithLabel name={num} value={categoryList[num]} label='分类名称' placeholder='请输入分类名称' onChange={this.handleOnChange} />
-              <button className={styles.inputDelete} onClick={this.deleteOneLine} data-index={num}>删除</button>
+              <img src={close} className={styles.inputDelete} onClick={this.deleteOneLine} data-index={num} />
             </div>
           )}
         </Form>

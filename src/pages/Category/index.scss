@@ -3,13 +3,11 @@
 }
 .inputDelete{
     position: absolute;
-    top:3px;
+    top:8px;
     right:15px;
-    background: red;
     border: none;
-    color: #fff;
-    width: 60px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
 }
 .inputBox[index='0'] .inputDelete{
   display: none;
@@ -20,6 +18,7 @@
     margin-top: 20px;
   }
   &_List{
+    background: #fff;
     p{text-align: center}
   }
   &_add {
@@ -36,3 +35,10 @@
     }
   }
 }
+
+.change_icon{
+  float: right;
+  height: 25px;
+  margin-left: 10px;
+}
+
