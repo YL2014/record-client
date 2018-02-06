@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { CellsTitle } from 'react-weui'
 import List from 'Gb/components/List'
+import Dialog from 'Gb/components/Dialog'
 import { close, write } from 'Gb/icons'
 import categoryActions from './actions'
 
@@ -15,16 +16,38 @@ class CategoryList extends Component {
       categoryList: []
     }
     this.filterList = this.filterList.bind(this)
+    this.update = this.update.bind(this)
+    this.remove = this.remove.bind(this)
+    this.updateName = this.updateName.bind(this)
+    this.updateCategory = this.updateCategory.bind(this)
+    this.removeCategory = this.removeCategory.bind(this)
   }
 
+  // 展示修改弹窗
   update (id) {
-    this.setState({ updateID: id })
+    this.setState({ updateID: id, showUpdate: true })
     
   }
 
+  // 展示删除弹框
   remove (id) {
-    this.setState({ removeId: id })
+    this.setState({ removeId: id, showRemove: true })
     
+  }
+
+  // 修改弹框input的onChange
+  updateName () {
+
+  }
+
+  // 修改确认回调
+  updateCategory () {
+
+  }
+
+  // 删除确认回调
+  removeCategory () {
+
   }
 
   filterList () {
@@ -38,8 +61,8 @@ class CategoryList extends Component {
         },
         title: item.name,
         desc: <div>
-          <img onClick={this.remove.bind(this, item.id)} className={styles.change_icon} src={close} alt='icon' />
-          <img onClick={this.update.bind(this, item.id)} className={styles.change_icon} src={write} alt='icon' />
+          <img onClick={this.remove.bind(this, item._id)} className={styles.change_icon} src={close} alt='icon' />
+          <img onClick={this.update.bind(this, item._id)} className={styles.change_icon} src={write} alt='icon' />
         </div>
       }
     })
@@ -52,13 +75,26 @@ class CategoryList extends Component {
 
   render () {
     let list = this.filterList()
-    console.log(list)
+    const { showUpdate, showRemove } = this.state
     return (
       <div>
         <CellsTitle>商品分类列表</CellsTitle>
         <ul className={styles.confirm_List}>
           <List dataSource={list} />
         </ul>
+        <Dialog
+          title='修改分类'
+          show={showUpdate}
+          hideDialog={() => { this.setState({ showUpdate: false }) }}
+          ok={this.updateCategory} >
+          <input placeholder='请输入新的分类名称' onChange={this.updateName}/>
+        </Dialog>
+        <Dialog
+          show={showRemove}
+          hideDialog={() => { this.setState({ showRemove: false }) }}
+          ok={this.removeCategory} >
+          确认删除该分类？
+        </Dialog>
       </div>
     )
   }

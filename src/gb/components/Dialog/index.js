@@ -1,45 +1,84 @@
 import React, { Component } from 'react'
-import ReactDom from 'react-dom'
 import { Dialog } from 'react-weui'
-import './index.scss'
+// import './index.scss'
 
 class CustomeDialog extends Component {
   constructor () {
     super()
-    this.state = {
-      show: false,
-      ok: true,
-      cancel: false,
-      okText: '确认',
-      cancelText: '取消'
+    this.state = {}
+    this.ok = this.ok.bind(this)
+    this.cancel = this.cancel.bind(this)
+    this.hideDialog = this.hideDialog.bind(this)
+  }
+
+  // 确认
+  ok () {
+    this.props.okShouldHide && this.hideDialog()
+    this.props.ok && this.props.ok()
+  }
+
+  // 取消
+  cancel () {
+    this.props.cancelShouldHide && this.hideDialog()
+    this.props.cancel && this.props.cancel()
+  }
+
+  hideDialog () {
+    this.props.hideDialog && this.props.hideDialog()
+  }
+
+  componentDidMount () {
+    console.log(this.props)
+    const { type, okText, cancelText } = this.props
+    if (type === 'Confirm') {
+      this.setState({
+        btns: [
+          {
+            type: 'default',
+            label: cancelText,
+            onClick: this.cancel.bind(this)
+          },
+          {
+              type: 'primary',
+              label: okText,
+              onClick: this.ok.bind(this)
+          }
+        ]
+      })
+    } else {
+      this.setState({
+        btns: [
+          {
+              type: 'primary',
+              label: okText,
+              onClick: this.ok.bind(this)
+          }
+        ]
+      })
     }
   }
-  hideDialog () {
-    this.setState({show: false})
-  }
+
   render () {
-    const { show, cancel, okText, cancelText } = this.state
-    const {message, ...res} = this.props
-    const button1 = [{
-      types: 'primary',
-      label: okText,
-      onClick: this.hideDialog.bind(this)
-    }]
-    const button2 = [{
-      types: 'default',
-      label: cancelText,
-      onClick: this.hideDialog.bind(this)
-    },
-    {
-      types: 'primary',
-      label: okText,
-      onClick: this.hideDialog.bind(this)
-    }]
-    const buttons = cancel ? button2:button1
-    return <Dialog type='ios' title={message} buttons={buttons} show={this.state.show}>
-      {/* 是否显示输入框 */}
+    const { show, title, children, className } = this.props
+    const { btns } = this.state
+
+    return <Dialog type='ios' title={title} buttons={btns} show={show} className={className}>
+      {children}
     </Dialog>
   }
+}
+
+CustomeDialog.defaultProps = {
+  title: '',
+  ok: () => {},
+  cancel: () => {},
+  okText: '确认',
+  cancelText: '取消',
+  show: false,
+  hideDialog: () => {},
+  type: 'Confirm', // Confirm | Alert
+  okShouldHide: true,
+  cancelShouldHide: true
 }
 
 export default CustomeDialog

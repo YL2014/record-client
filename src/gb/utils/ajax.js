@@ -1,5 +1,5 @@
 import axios from 'axios'
-import qs from 'qs'
+// import qs from 'qs'
 import Toast from 'Gb/components/Toast'
 
 axios.defaults = Object.assign(axios.defaults, {
