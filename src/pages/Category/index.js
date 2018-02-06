@@ -36,12 +36,14 @@ class CategoryList extends Component {
 
   // 修改弹框input的onChange
   updateName (e) {
-    this.setState({ newName: e.target.value })
+    const { value } = e.target
+    this.props.actions.setNewName(value)
   }
 
   // 修改确认回调
   async updateCategory () {
-    const { newName, updateId } = this.state
+    const { updateId } = this.state
+    const { newName } = this.props.category
     if (!newName) {
       Toast('请输入新的分类名称')
       return
@@ -83,8 +85,8 @@ class CategoryList extends Component {
 
   render () {
     let list = this.filterList()
-    console.log(this.state)
-    const { showUpdate, showRemove, newName='' } = this.state
+    const { showUpdate, showRemove } = this.state
+    const { newName = '' } = this.props.category
     return (
       <div>
         <CellsTitle>商品分类列表</CellsTitle>

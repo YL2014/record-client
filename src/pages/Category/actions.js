@@ -4,6 +4,7 @@ import Toast from 'Gb/components/Toast'
 
 import {
   INIT_LIST,
+  SET_NEWNAME,
   API
 } from './constains'
 
@@ -28,11 +29,19 @@ const addCategory = (params) => {
   }
 }
 
+const setNewName = (newName) => {
+  return {
+    type: SET_NEWNAME,
+    data: newName
+  }
+}
+
 const updateCategory = (params) => {
   return async (dispatch) => {
     const data = await ajax.post(API.update, params)
     if (data) {
       Toast.success('修改分类成功')
+      dispatch(setNewName(''))
       setTimeout(() => {
         dispatch(fetchList())
       }, 1000)
@@ -54,5 +63,6 @@ export default {
   fetchList,
   addCategory,
   updateCategory,
-  removeCategory
+  removeCategory,
+  setNewName
 }

@@ -1,9 +1,11 @@
 import {
-  INIT_LIST
+  INIT_LIST,
+  SET_NEWNAME
 } from './constains'
 
 const INITIAL_STATE = {
-  list: null
+  list: null,
+  newName: ''
 }
 
 const category = (state = INITIAL_STATE, action) => {
@@ -12,6 +14,11 @@ const category = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         list: action.data
+      }
+    case SET_NEWNAME:
+      return {
+        ...state,
+        newName: action.data
       }
     default:
       return state
