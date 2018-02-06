@@ -6,6 +6,9 @@ import List from 'Gb/components/List'
 import Dialog from 'Gb/components/Dialog'
 import { close, write } from 'Gb/icons'
 import categoryActions from './actions'
+import ajax from 'Gb/utils/ajax'
+import { API } from './constains'
+import Toast from 'Gb/components/Toast'
 
 import styles from './index.scss'
 
@@ -25,24 +28,30 @@ class CategoryList extends Component {
 
   // 展示修改弹窗
   update (id) {
-    this.setState({ updateID: id, showUpdate: true })
-    
+    this.setState({ updateId: id, showUpdate: true })
   }
 
   // 展示删除弹框
   remove (id) {
     this.setState({ removeId: id, showRemove: true })
-    
   }
 
   // 修改弹框input的onChange
-  updateName () {
-
+  updateName (e) {
+    this.setState({ newName: e.target.value })
   }
 
   // 修改确认回调
-  updateCategory () {
-
+  async updateCategory () {
+    const { newName, updateId } = this.state
+    if (!newName) {
+      Toast('请输入新的分类名称')
+      return
+    }
+    this.props.actions.updateCategory({
+      name: newName,
+      id: updateId
+    })
   }
 
   // 删除确认回调
@@ -75,7 +84,8 @@ class CategoryList extends Component {
 
   render () {
     let list = this.filterList()
-    const { showUpdate, showRemove } = this.state
+    console.log(this.state)
+    const { showUpdate, showRemove, newName='' } = this.state
     return (
       <div>
         <CellsTitle>商品分类列表</CellsTitle>
@@ -87,7 +97,7 @@ class CategoryList extends Component {
           show={showUpdate}
           hideDialog={() => { this.setState({ showUpdate: false }) }}
           ok={this.updateCategory} >
-          <input placeholder='请输入新的分类名称' onChange={this.updateName}/>
+          <input placeholder='请输入新的分类名称' onChange={this.updateName} value={newName} />
         </Dialog>
         <Dialog
           show={showRemove}

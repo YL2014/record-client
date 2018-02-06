@@ -77,7 +77,7 @@ class Category extends Component {
           {categoryList.map((val, num) =>
             <div className={styles.inputBox} key={`category${num}`} index={num}>
               <InputWithLabel name={num} value={categoryList[num]} label='分类名称' placeholder='请输入分类名称' onChange={this.handleOnChange} />
-              <img src={close} className={styles.inputDelete} onClick={this.deleteOneLine} data-index={num} />
+              <img src={close} className={styles.inputDelete} onClick={this.deleteOneLine} data-index={num} alt='close'/>
             </div>
           )}
         </Form>

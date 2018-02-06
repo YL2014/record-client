@@ -33,6 +33,9 @@ const updateCategory = (params) => {
     const data = await ajax.post(API.update, params)
     if (data) {
       Toast.success('修改分类成功')
+      setTimeout(() => {
+        dispatch(fetchList())
+      }, 1000)
     }
   }
 }
