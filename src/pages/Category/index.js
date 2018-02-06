@@ -6,8 +6,6 @@ import List from 'Gb/components/List'
 import Dialog from 'Gb/components/Dialog'
 import { close, write } from 'Gb/icons'
 import categoryActions from './actions'
-import ajax from 'Gb/utils/ajax'
-import { API } from './constains'
 import Toast from 'Gb/components/Toast'
 
 import styles from './index.scss'
@@ -56,7 +54,8 @@ class CategoryList extends Component {
 
   // 删除确认回调
   removeCategory () {
-
+    const { removeId } = this.state
+    this.props.actions.removeCategory(removeId)
   }
 
   filterList () {

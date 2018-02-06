@@ -40,8 +40,19 @@ const updateCategory = (params) => {
   }
 }
 
+const removeCategory = (id) => {
+  return async (dispatch) => {
+    const data = await ajax.get(`${API.remove}/${id}`)
+    if (data) {
+      Toast.success('删除分类成功')
+      dispatch(fetchList())
+    }
+  }
+}
+
 export default {
   fetchList,
   addCategory,
-  updateCategory
+  updateCategory,
+  removeCategory
 }
