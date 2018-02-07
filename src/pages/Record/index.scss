@@ -1,0 +1,36 @@
+.record{
+  &_inputbox,&_goods{
+    background: #fff;
+    padding:10px 15px;
+  }
+  &_info{
+    display: block;
+    width: 100%;
+    border:none;
+    resize: none;
+    color: inherit;
+    font-size: 1em;
+    line-height: inherit;
+    outline: 0;    
+  }
+  &_numbox{
+    display: flex;
+  }
+  &_inputnum{
+    width: 40px;
+    text-align: center; 
+  }
+  &_sub,&_add{
+    width:20px;
+    height: 20px;
+    border:1px solid #999;
+    text-align: center;
+    line-height: 20px;
+  }
+  &_sub{
+    border-right: none;
+  }
+  &_add{
+    border-left: none;
+  }
+}

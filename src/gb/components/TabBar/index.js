@@ -23,7 +23,7 @@ export default class TabBar extends Component {
     if (role === 1) {
       list.push({path: '/manage', title: '管理审核', icon: present, iconFill: present_fill})
     } else {
-      list.push({path: '/orderadd', title: '订单录入', icon: home, iconFill: home_fill})
+      list.push({path: '/record', title: '订单录入', icon: home, iconFill: home_fill})
     }
     this.setState({ list: list })
   }
