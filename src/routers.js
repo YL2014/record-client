@@ -18,8 +18,10 @@ import User from 'Pages/User'
 import Manage from 'Pages/Manage'
 import Goods from 'Pages/Goods'
 import GoodsAdd from 'Pages/Goods/add'
+import GoodsDetail from 'Pages/Goods/detail'
+import GoodsUpdate from 'Pages/Goods/update'
 
-const adminPath = ['/manage', '/goods', '/goodsadd', '/goodsupdate',
+const adminPath = ['/manage', '/goods', '/goodsadd', '/goodsdetail', '/goodsupdate',
   '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck']
 const zongPath = ['/ordercheck', '/usercheck']
 
@@ -64,6 +66,8 @@ const Root = ({ store, history }) => (
         <PrivateRoute path='/manage' component={Manage} />
         <PrivateRoute path='/goods' component={Goods} />
         <PrivateRoute path='/goodsadd' component={GoodsAdd} />
+        <PrivateRoute path='/goodsdetail' component={GoodsDetail} />
+        <PrivateRoute path='/goodsupdate' component={GoodsUpdate} />
       </Base>
     </ConnectedRouter>
   </Provider>

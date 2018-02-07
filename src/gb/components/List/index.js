@@ -10,11 +10,12 @@ export default class List extends Component {
     return <div className={className} {...other}>
       {
         dataSource && dataSource.map((item, index) => {
-          const { title, desc, icon, addedit, ...res } = item
+          const { label, title, desc, icon, ...res } = item
           return <Cell {...res} key={index}>
             { icon && <CellHeader>
               <img src={icon} className='gb_list_icon' alt='icon' />
             </CellHeader> }
+            { (label && !icon) && <CellHeader>{label}</CellHeader> }
             <CellBody>{title}</CellBody>
             { desc && <CellFooter>{desc}</CellFooter> }
           </Cell>

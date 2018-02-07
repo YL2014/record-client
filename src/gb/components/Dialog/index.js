@@ -28,7 +28,6 @@ class CustomeDialog extends Component {
   }
 
   componentDidMount () {
-    console.log(this.props)
     const { type, okText, cancelText } = this.props
     if (type === 'Confirm') {
       this.setState({

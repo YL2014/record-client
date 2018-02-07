@@ -11,11 +11,12 @@ export default class LinkList extends Component {
     return <div className={className} {...other}>
       {
         dataSource && dataSource.map((item,index) => {
-          const { to, title, desc, icon, ...res } = item
+          const { to, label, title, desc, icon, ...res } = item
           return to &&  <Link className='weui-cell weui-cell_access' to={to} {...res} key={index}>
             {icon && <CellHeader>
               <img src={icon} className='gb_linklist_icon'alt='icon' />
             </CellHeader>}
+            {(label && !icon) && <CellHeader>{label}</CellHeader>}
             <CellBody>{title}</CellBody>
             { desc ? <CellFooter>{desc}</CellFooter> : <CellFooter /> }
           </Link>

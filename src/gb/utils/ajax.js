@@ -31,7 +31,6 @@ axios.interceptors.response.use(function (response) {
   }
   return data.data
 }, function (error) {
-  console.log(error)
   Toast('网络异常，请稍后再试')
   return Promise.resolve(null)
 })

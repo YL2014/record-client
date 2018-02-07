@@ -20,18 +20,18 @@ class GoodsAdd extends Component {
 
   handleChange (e) {
     const { name, value } = e.target
-    this.props.actions.handleChange({name, value})
+    this.props.actions.handleChange({name, value, type: 'update'})
   }
 
   uploadImg () {
     const file = this.fileNode.files[0]
     if (file) {
-      this.props.actions.uploadImg(file)
+      this.props.actions.uploadImg(file, 'update')
     }
   }
 
   addGoods () {
-    this.props.actions.addGoods()
+    this.props.actions.addGoods('update')
   }
 
   filterCategory () {
@@ -44,20 +44,30 @@ class GoodsAdd extends Component {
     })
   }
 
+  initUpdate () {
+    const { state } = this.props.location
+    const goodsDetail = state
+    this.props.actions.initUpdateDetail(goodsDetail)
+  }
+
   componentDidMount () {
     this.props.actions.fetchCategory()
+    this.initUpdate()
   }
 
   render () {
-    const { name, bprice, zprice, tprice, lprice, apply, category, image } = this.props.goods.add
+    const { update } = this.props.goods
+    if (!update) return null
+    const { name, bprice, zprice, tprice, lprice, apply, categoryId, image } = update
+    if (!update) return null
     return <div className={styles.goodsadd}>
-      <InputWithLabel value={name} name='name' onChange={this.handleChange} label='商品名称' maxLength='16' />
-      <InputWithLabel value={bprice} name='bprice' onChange={this.handleChange} label='进价' type='number' maxLength='10' />
-      <InputWithLabel value={zprice} name='zprice' onChange={this.handleChange} label='总代价' type='number' maxLength='10' />
-      <InputWithLabel value={tprice} name='tprice' onChange={this.handleChange} label='特代价' type='number' maxLength='10' />
-      <InputWithLabel value={lprice} name='lprice' onChange={this.handleChange} label='零售价' type='number' maxLength='10' />
-      <InputWithLabel value={apply} name='apply' onChange={this.handleChange} label='供应商' max='20' />
-      <SelectWithLabel value={category} name='category' options={this.filterCategory()} onChange={this.handleChange} label='商品分类' />
+      <InputWithLabel value={name} name='name' onChange={this.handleChange} label='商品名称' />
+      <InputWithLabel value={bprice} name='bprice' onChange={this.handleChange} label='进价' type='number' />
+      <InputWithLabel value={zprice} name='zprice' onChange={this.handleChange} label='总代价' type='number' />
+      <InputWithLabel value={tprice} name='tprice' onChange={this.handleChange} label='特代价' type='number' />
+      <InputWithLabel value={lprice} name='lprice' onChange={this.handleChange} label='零售价' type='number' />
+      <InputWithLabel value={apply} name='apply' onChange={this.handleChange} label='供应商' />
+      <SelectWithLabel value={categoryId} name='categoryId' options={this.filterCategory()} onChange={this.handleChange} label='商品分类' />
       <Cell>
         <CellHeader>
           上传商品图
@@ -72,7 +82,7 @@ class GoodsAdd extends Component {
         </CellFooter>
       </Cell>
       <div className={styles.goodsadd_btn}>
-        <Button onClick={this.addGoods}>提交</Button>
+        <Button onClick={this.addGoods}>提交更新</Button>
       </div>
       
       
