@@ -11,15 +11,21 @@ import { Route } from 'react-router'
 import Base from 'Gb/components/Base'
 import App from 'Pages/App'
 import Login from 'Pages/Login'
+
 import Category from 'Pages/Category'
 import CategoryAdd from 'Pages/Category/add.js'
 import CategoryUpdate from 'Pages/Category/update.js'
+
 import User from 'Pages/User'
+import UserAdd from 'Pages/User/add'
+
 import Manage from 'Pages/Manage'
+
 import Goods from 'Pages/Goods'
 import GoodsAdd from 'Pages/Goods/add'
 import GoodsDetail from 'Pages/Goods/detail'
 import GoodsUpdate from 'Pages/Goods/update'
+
 import Record from 'Pages/Record'
 
 const adminPath = ['/manage', '/goods', '/goodsadd', '/goodsdetail', '/goodsupdate',
@@ -70,6 +76,7 @@ const Root = ({ store, history }) => (
         <PrivateRoute path='/goodsdetail' component={GoodsDetail} />
         <PrivateRoute path='/goodsupdate' component={GoodsUpdate} />
         <PrivateRoute path='/record' component={Record} />
+        <Route path='/useradd' component={UserAdd} />
       </Base>
     </ConnectedRouter>
   </Provider>
