@@ -18,6 +18,7 @@ import CategoryUpdate from 'Pages/Category/update.js'
 
 import User from 'Pages/User'
 import UserAdd from 'Pages/User/add'
+import UserCheck from 'Pages/User/checklist'
 
 import Manage from 'Pages/Manage'
 
@@ -29,7 +30,7 @@ import GoodsUpdate from 'Pages/Goods/update'
 import Record from 'Pages/Record'
 
 const adminPath = ['/manage', '/goods', '/goodsadd', '/goodsdetail', '/goodsupdate',
-  '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck']
+  '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck', '/usercheck']
 const zongPath = ['/ordercheck', '/usercheck']
 
 // 权限认证
@@ -48,7 +49,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     // }
     const pathname = props.location.pathname
     if (adminPath.indexOf(pathname) > -1 && user.role !== 1) isAuth = false
-    if (zongPath.indexOf(pathname) > -1 && user.role !== 2) isAuth = false
+    if (zongPath.indexOf(pathname) > -1 && user.role !== 2 && user.role !== 1) isAuth = false
     return (!isAuth && pathname !== '/login') ? (
       <Redirect to={{
         pathname: '/login',
@@ -77,6 +78,7 @@ const Root = ({ store, history }) => (
         <PrivateRoute path='/goodsupdate' component={GoodsUpdate} />
         <PrivateRoute path='/record' component={Record} />
         <Route path='/useradd' component={UserAdd} />
+        <PrivateRoute path='/usercheck' component={UserCheck} />
       </Base>
     </ConnectedRouter>
   </Provider>
