@@ -18,8 +18,12 @@ class UserIndex extends Component {
       { to: '/order', title: '订单管理', icon: text }
     ]
     if (role === 1 || role === 2) {
+      const curUser = JSON.parse(localStorage.getItem('user'))
+      // const curRole = curUser.role
+      const curUserId = curUser.id
       dataSource = dataSource.concat([
-        {to: '/group', icon: goods, title: '团队管理'}
+        {to: '/group', icon: goods, title: '团队管理'},
+        {to: {pathname: '/useradd', search: `?id=${curUserId}`, state: { id: curUserId }}, icon: my, title: '新增代理'}
       ])
     }
     this.setState({ dataSource })
