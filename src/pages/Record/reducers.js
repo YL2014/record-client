@@ -1,5 +1,7 @@
 import {
-  INIT_LIST
+  INIT_LIST,
+  SET_ITEM_NUM,
+  SET_CUSTOMER_INFO
 } from './constains'
 
 const INITIAL_STATE = {
@@ -12,6 +14,19 @@ const record = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         list: action.data
+      }
+    case SET_ITEM_NUM:
+      let cloneList = state.list
+      const { index, num } = action
+      cloneList[index].num = num
+      return {
+        ...state,
+        list: cloneList
+      }
+    case SET_CUSTOMER_INFO:
+      return {
+        ...state,
+        customerInfo: action.data
       }
     default:
       return state
