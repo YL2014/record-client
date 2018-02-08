@@ -36,7 +36,7 @@ const zongPath = ['/ordercheck', '/usercheck']
 // 权限认证
 const PrivateRoute = ({ component: Component, ...rest }) => {
   let isAuth = true
-  let user = window.localStorage.getItem('user')
+  let user = localStorage.getItem('user')
   if (!user) {
     isAuth = false
   }
