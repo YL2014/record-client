@@ -10,13 +10,19 @@ export default class List extends Component {
     return <div className={className} {...other}>
       {
         dataSource && dataSource.map((item, index) => {
-          const { label, title, desc, icon, ...res } = item
+          const { label, title, desc, icon, rank, lprice, tprice, zprice, ...res } = item
           return <Cell {...res} key={index}>
             { icon && <CellHeader>
               <img src={icon} className='gb_list_icon' alt='icon' />
             </CellHeader> }
             { (label && !icon) && <CellHeader>{label}</CellHeader> }
-            <CellBody>{title}</CellBody>
+            <CellBody>
+              {title}
+              {rank && <div className='showprice' >
+                <span className='lprice'>￥{lprice}</span>
+                <span className='realprice'>￥{ rank === 3 ? tprice : zprice}</span>
+              </div>}
+            </CellBody>
             { desc && <CellFooter>{desc}</CellFooter> }
           </Cell>
         })

@@ -28,6 +28,7 @@ import GoodsDetail from 'Pages/Goods/detail'
 import GoodsUpdate from 'Pages/Goods/update'
 
 import Record from 'Pages/Record'
+import Confirm from 'Pages/Record/Confirm.js'
 
 const adminPath = ['/manage', '/goods', '/goodsadd', '/goodsdetail', '/goodsupdate',
   '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck', '/usercheck']
@@ -77,6 +78,7 @@ const Root = ({ store, history }) => (
         <PrivateRoute path='/goodsdetail' component={GoodsDetail} />
         <PrivateRoute path='/goodsupdate' component={GoodsUpdate} />
         <PrivateRoute path='/record' component={Record} />
+        <PrivateRoute path='/confirm' component={Confirm} />
         <Route path='/useradd' component={UserAdd} />
         <PrivateRoute path='/usercheck' component={UserCheck} />
       </Base>

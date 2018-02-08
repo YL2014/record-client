@@ -4,12 +4,10 @@ import { bindActionCreators } from 'redux'
 import List from 'Gb/components/List'
 import recordActions from './actions'
 import { CellsTitle, Button } from 'react-weui'
-import Toast from 'Gb/components/Toast'
-import Helper from 'Gb/utils/helper'
 
 import styles from './index.scss'
 
-class Record extends Component {
+class Confirm extends Component{
   constructor () {
     super()
     this.state = {
@@ -17,9 +15,6 @@ class Record extends Component {
     }
     this.filterList = this.filterList.bind(this)
     this.writeInfo = this.writeInfo.bind(this)
-    // this.showNum = this.showNum.bind(this)
-    // this.subNum = this.subNum.bind(this)
-    // this.addNum = this.addNum.bind(this)
     this.toConfirmPage = this.toConfirmPage.bind(this)
   }
 
@@ -41,9 +36,7 @@ class Record extends Component {
         tprice: item.tprice,
         rank: rank.role, // 表示级别
         desc: <div className={styles.record_numbox} >
-          <span className={styles.record_sub} onClick={this.subNum.bind(this, index)}>-</span>
-          <input type='number' max='99' className={styles.record_inputnum} disabled value={item.num || 0} onChange={this.showNum.bind(this, index)} />
-          <span className={styles.record_add} onClick={this.addNum.bind(this, index)}>+</span>
+          
         </div>
       }
     })
@@ -59,20 +52,6 @@ class Record extends Component {
     this.props.actions.setItemNum(index, value)
   }
 
-  subNum (index) {
-    const { list } = this.props.record
-    let num = list[index].num
-    if (num === 0) return
-    this.props.actions.setItemNum(index, --num)
-  }
-
-  addNum (index) {
-    const { list } = this.props.record
-    let num = list[index].num
-    // if (num === 0) return
-    this.props.actions.setItemNum(index, ++num)
-  }
-
   componentDidMount () {
     const { fetchList } = this.props.actions
     const { list } = this.props.record
@@ -82,32 +61,7 @@ class Record extends Component {
   }
 
   toConfirmPage () {
-    let cusInfo = this.props.record.customerInfo
-    if (cusInfo) {
-      if (cusInfo.split('，').length !== 3) {
-        Toast('客户信息格式不正确')
-      } else {
-        const phone = cusInfo.split('，')[1]
-        if (!Helper.reg.telephone.test(phone)) {
-          Toast('手机号码格式不正确')
-        } else {
-          const list = this.props.record.list
-          let hasGoods = false
-          list.forEach((item) => {
-            if (item.num > 0) {
-              hasGoods = true
-            }
-          })
-          if (hasGoods) {
-            this.props.history.push('/confirm')
-          } else {
-            Toast('至少添加一件商品')
-          }
-        }
-      }
-    } else {
-      Toast('请先填写客户信息')
-    }
+    this.props.history.replace('/category')
   }
 
   render () {
@@ -139,4 +93,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Record)
+export default connect(mapStateToProps, mapDispatchToProps)(Confirm)

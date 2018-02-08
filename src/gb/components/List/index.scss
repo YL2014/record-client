@@ -10,4 +10,18 @@
     text-align: center;
     color: #999;
   }
+  .showprice{
+    span{
+      display: block;
+    }
+    .lprice{
+      text-decoration: line-through;
+      font-size: 14px;
+      color: #000;
+    }
+    .realprice{
+      color: red;
+      font-size: 16px;
+    }
+  }
 }
