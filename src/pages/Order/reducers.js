@@ -1,17 +1,28 @@
-import { TESTTYPE } from './types'
+import {
+  INIT_ORDER,
+  INIT_DETAIL
+} from './constains'
 
-const INIT_STATES = {
-  value: 'test'
+const INITIAL_STATE = {
+  list: []
 }
 
-export const app = (state = INIT_STATES, action) => {
+const order = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case TESTTYPE:
+    case INIT_ORDER:
       return {
         ...state,
-        value: action.value
+        list: action.list,
+        count: action.count
+      }
+    case INIT_DETAIL:
+      return {
+        ...state,
+        detail: action.data
       }
     default :
       return state
   }
 }
+
+export default order

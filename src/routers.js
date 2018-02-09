@@ -31,6 +31,9 @@ import GoodsUpdate from 'Pages/Goods/update'
 import Record from 'Pages/Record'
 import Confirm from 'Pages/Record/confirm.js'
 
+import Order from 'Pages/Order'
+import OrderDetail from 'Pages/Order/detail'
+
 const adminPath = ['/manage', '/goods', '/goodsadd', '/goodsdetail', '/goodsupdate',
   '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck', '/ordercheck', '/usercheck', '/userchecks']
 const zongPath = ['/manage', '/ordercheck', '/usercheck', '/userchecks']
@@ -83,6 +86,8 @@ const Root = ({ store, history }) => (
         <Route path='/useradd' component={UserAdd} />
         <PrivateRoute path='/usercheck' component={UserCheck} />
         <PrivateRoute path='/userchecks' component={UserCheckDetail} />
+        <PrivateRoute path='/order' component={Order} />
+        <PrivateRoute path='/orderdetail' component={OrderDetail} />
       </Base>
     </ConnectedRouter>
   </Provider>

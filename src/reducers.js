@@ -7,6 +7,7 @@ import category from 'Pages/Category/reducers'
 import goods from 'Pages/Goods/reducers'
 import record from 'Pages/Record/reducers'
 import user from 'Pages/User/reducers'
+import order from 'Pages/Order/reducers'
 
 const rootReducer = combineReducers({
   app,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   goods,
   record,
   user,
+  order,
   router
 })
 
