@@ -21,7 +21,8 @@
   }
   &_inputnum{
     width: 40px;
-    text-align: center; 
+    text-align: center;
+    border:1px solid #999;
   }
   &_sub,&_add{
     width:20px;
@@ -49,6 +50,17 @@
     margin-right: 5px;
     img{
       width: 100%;
+    }
+  }
+  &_buygoods{
+    :global .lprice{
+      display: none
+    }
+  }
+  &_total{
+    padding:10px 15px 80px 15px;
+    span{
+      color: red;
     }
   }
 }

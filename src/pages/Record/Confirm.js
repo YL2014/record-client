@@ -11,49 +11,70 @@ class Confirm extends Component {
   constructor () {
     super()
     this.state = {
-      goodsList: []
+      goodsList: [],
+      total: 0,
+      order: {}
     }
-    this.toConfirmPage = this.toConfirmPage.bind(this)
+    this.toRecordPage = this.toRecordPage.bind(this)
     this.filterList = this.filterList.bind(this)
+    this.submitRecord = this.submitRecord.bind(this)
   }
 
-  componentDidMount () {
-
+  toRecordPage () {
+    this.props.history.goBack()
   }
-
-  toConfirmPage () {
-    // this.props.history.replace('/category')
+  submitRecord () {
+    const param = this.state.order
+    this.props.actions.submitOrder(param)
   }
 
   filterList () {
     const { list } = this.props.record
     const rank = JSON.parse(window.localStorage.getItem('user'))
+    let orderInfo = {}
+    let cusInfos = this.props.record.customerInfo
+    let cusInfo = cusInfos ? cusInfos.split(',') : []
+    orderInfo = {'user': {'name': cusInfo[0], 'mobile': cusInfo[1], 'address': cusInfo[2]}}
+    let goods = []
     if (!list) return null
-    const newList = list.filter(item => { return item.num > 0 })
-    return newList.map((item, index) => {
-        return {
-          num: item.num,
-          to: {
-            pathname: '/goods/detail',
-            state: item
-          },
-          title: item.name,
-          icon: item.image,
-          lprice: item.lprice,
-          zprice: item.zprice,
-          tprice: item.tprice,
-          rank: rank.role, // 表示级别
-          desc: <div className={styles.record_numbox} />
-        }
+    let total = 0
+    let newList = list.filter(item => {
+      total += rank.role === 2 ? item.zprice * item.num : item.tprice * item.num
+      return item.num > 0
+    })
+    newList = newList.map((item, index) => {
+      goods.push({'id': item.id, 'num': item.num})
+      return {
+        num: item.num,
+        to: {
+          pathname: '/goods/detail',
+          state: item
+        },
+        title: item.name,
+        icon: item.image,
+        lprice: item.lprice,
+        zprice: item.zprice,
+        tprice: item.tprice,
+        rank: rank.role, // 表示级别
+        desc: <div className={styles.record_numbox}>x{item.num}</div>
       }
-    )
+    })
+    orderInfo.goods = goods
+    this.setState({
+      total,
+      goodsList: newList,
+      order: orderInfo
+    })
+  }
+
+  componentDidMount () {
+    this.filterList()
   }
 
   render () {
-    console.log(this.props)
     let cusInfos = this.props.record.customerInfo
     let cusInfo = cusInfos ? cusInfos.split(',') : []
-    const list = this.filterList()
+    const { total, goodsList: list } = this.state
     return (
       <div>
         <CellsTitle>客户信息：</CellsTitle>
@@ -66,10 +87,14 @@ class Confirm extends Component {
             <span id='cusaddress'>{cusInfo[2]}</span></p>
         </div>
         <CellsTitle>商品信息：</CellsTitle>
-        <div className={styles.record_goods}>
+        <div className={`${styles.record_goods} ${styles.record_buygoods}`}>
           <List dataSource={list} />
         </div>
-        <div className={styles.record_next}><Button onClick={this.toConfirmPage}>下一步</Button></div>
+        <p className={styles.record_total}>总价：<span>￥{total}</span></p>
+        <div className={styles.record_next}>
+          <Button onClick={this.toRecordPage}>上一步</Button>
+          <Button onClick={this.submitRecord}>提交</Button>
+        </div>
       </div>
     )
   }
