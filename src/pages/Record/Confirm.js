@@ -7,15 +7,22 @@ import { CellsTitle, Button } from 'react-weui'
 
 import styles from './index.scss'
 
-class Confirm extends Component{
+class Confirm extends Component {
   constructor () {
     super()
     this.state = {
       goodsList: []
     }
-    this.filterList = this.filterList.bind(this)
-    this.writeInfo = this.writeInfo.bind(this)
     this.toConfirmPage = this.toConfirmPage.bind(this)
+    this.filterList = this.filterList.bind(this)
+  }
+
+  componentDidMount () {
+
+  }
+
+  toConfirmPage () {
+    // this.props.history.replace('/category')
   }
 
   filterList () {
@@ -23,57 +30,42 @@ class Confirm extends Component{
     const rank = JSON.parse(window.localStorage.getItem('user'))
     if (!list) return null
     return list.map((item, index) => {
-      return {
-        num: item.num,
-        to: {
-          path: '/goods/detail',
-          state: item
-        },
-        title: item.name,
-        icon: item.image,
-        lprice: item.lprice,
-        zprice: item.zprice,
-        tprice: item.tprice,
-        rank: rank.role, // 表示级别
-        desc: <div className={styles.record_numbox} >
-          
-        </div>
+      if (item.num > 0) {
+        return {
+          num: item.num,
+          to: {
+            pathname: '/goods/detail',
+            state: item
+          },
+          title: item.name,
+          icon: item.image,
+          lprice: item.lprice,
+          zprice: item.zprice,
+          tprice: item.tprice,
+          rank: rank.role, // 表示级别
+          desc: <div className={styles.record_numbox} />
+        }
       }
     })
   }
 
-  writeInfo (e) {
-    const { value } = e.target
-    this.props.actions.setCustomerInfo(value)
-  }
-
-  showNum (index, e) {
-    const { value } = e.target
-    this.props.actions.setItemNum(index, value)
-  }
-
-  componentDidMount () {
-    const { fetchList } = this.props.actions
-    const { list } = this.props.record
-    if (!list) {
-      fetchList && fetchList()
-    }
-  }
-
-  toConfirmPage () {
-    this.props.history.replace('/category')
-  }
-
   render () {
-    let list = this.filterList()
-    const { customerInfo = '' } = this.props.record
+    console.log(this.props)
+    let cusInfos = this.props.record.customerInfo
+    let cusInfo = cusInfos ? cusInfos.split(',') : []
+    const list = this.filterList()
     return (
       <div>
         <CellsTitle>客户信息：</CellsTitle>
         <div className={styles.record_inputbox}>
-          <textarea className={styles.record_info} placeholder='填写或粘贴用户姓名，电话，收货地址，并用中文逗号隔开' rows='3' maxLength='200' value={customerInfo} onChange={this.writeInfo} />
+          <p><label htmlFor='cusname'>客户姓名：</label>
+            <span id='cusname'>{cusInfo[0]}</span></p>
+          <p><label htmlFor='cusphone'>客户电话：</label>
+            <span id='cusphone'>{cusInfo[1]}</span></p>
+          <p><label htmlFor='cusaddress'>客户地址：</label>
+            <span id='cusaddress'>{cusInfo[2]}</span></p>
         </div>
-        <CellsTitle>选择商品：</CellsTitle>
+        <CellsTitle>商品信息：</CellsTitle>
         <div className={styles.record_goods}>
           <List dataSource={list} />
         </div>

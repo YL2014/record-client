@@ -84,10 +84,10 @@ class Record extends Component {
   toConfirmPage () {
     let cusInfo = this.props.record.customerInfo
     if (cusInfo) {
-      if (cusInfo.split('，').length !== 3) {
+      if (cusInfo.split(',').length !== 3) {
         Toast('客户信息格式不正确')
       } else {
-        const phone = cusInfo.split('，')[1]
+        const phone = cusInfo.split(',')[1]
         if (!Helper.reg.telephone.test(phone)) {
           Toast('手机号码格式不正确')
         } else {
