@@ -1,11 +1,12 @@
 import ajax from 'Gb/utils/ajax'
-// import { push } from 'react-router-redux'
-// import Toast from 'Gb/components/Toast'
+import { replace } from 'react-router-redux'
+import Toast from 'Gb/components/Toast'
 
 import {
   INIT_LIST,
   SET_ITEM_NUM,
   SET_CUSTOMER_INFO,
+  RESET_RECORD,
   API
 } from './constains'
 
@@ -22,6 +23,25 @@ const fetchList = (params) => {
         data
       })
     }
+  }
+}
+
+const submitOrder = (params) => {
+  return async (dispatch) => {
+    let data = await ajax.post(API.submit, params)
+    if (data) {
+      Toast.success('提交成功')
+      dispatch(resetRecord())
+      setTimeout(() => {
+        dispatch(replace('/record'))
+      }, 1000)
+    }
+  }
+}
+
+const resetRecord = () => {
+  return {
+    type: RESET_RECORD
   }
 }
 
@@ -43,5 +63,7 @@ const setCustomerInfo = (customerInfo) => {
 export default {
   fetchList,
   setItemNum,
-  setCustomerInfo
+  setCustomerInfo,
+  submitOrder,
+  resetRecord
 }
