@@ -46,3 +46,26 @@
     }
   }
 }
+
+.checklist {
+  margin-top: 20px;
+  background-color: #fff;
+}
+
+.checkdetail {
+  // margin-top: 20px;
+  // padding-bottom: 20px;
+  // background-color: #fff;
+
+  &_block {
+    margin-top: 20px;
+    // padding-bottom: 20px;
+    background-color: #fff;
+  }
+
+  &_img {
+    width: 77px;
+    height: 77px;
+    border: 1px solid #D9D9D9;
+  }
+}

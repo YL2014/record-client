@@ -19,6 +19,7 @@ import CategoryUpdate from 'Pages/Category/update.js'
 import User from 'Pages/User'
 import UserAdd from 'Pages/User/add'
 import UserCheck from 'Pages/User/checklist'
+import UserCheckDetail from 'Pages/User/checkdetail'
 
 import Manage from 'Pages/Manage'
 
@@ -31,8 +32,8 @@ import Record from 'Pages/Record'
 import Confirm from 'Pages/Record/Confirm.js'
 
 const adminPath = ['/manage', '/goods', '/goodsadd', '/goodsdetail', '/goodsupdate',
-  '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck', '/usercheck']
-const zongPath = ['/ordercheck', '/usercheck']
+  '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck', '/ordercheck', '/usercheck', '/userchecks']
+const zongPath = ['/manage', '/ordercheck', '/usercheck', '/userchecks']
 
 // 权限认证
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -49,7 +50,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     //   }} />
     // }
     const pathname = props.location.pathname
-    if (adminPath.indexOf(pathname) > -1 && user.role !== 1) isAuth = false
+    if (adminPath.indexOf(pathname) > -1 && user.role !== 2 && user.role !== 1) isAuth = false
     if (zongPath.indexOf(pathname) > -1 && user.role !== 2 && user.role !== 1) isAuth = false
     return (!isAuth && pathname !== '/login') ? (
       <Redirect to={{
@@ -81,6 +82,7 @@ const Root = ({ store, history }) => (
         <PrivateRoute path='/confirm' component={Confirm} />
         <Route path='/useradd' component={UserAdd} />
         <PrivateRoute path='/usercheck' component={UserCheck} />
+        <PrivateRoute path='/userchecks' component={UserCheckDetail} />
       </Base>
     </ConnectedRouter>
   </Provider>
