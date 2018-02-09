@@ -99,7 +99,7 @@ class Record extends Component {
             }
           })
           if (hasGoods) {
-            this.props.history.push('/confirm')
+            this.props.history.push('/recordcf')
           } else {
             Toast('至少添加一件商品')
           }

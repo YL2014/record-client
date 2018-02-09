@@ -29,8 +29,8 @@ class Confirm extends Component {
     const { list } = this.props.record
     const rank = JSON.parse(window.localStorage.getItem('user'))
     if (!list) return null
-    return list.map((item, index) => {
-      if (item.num > 0) {
+    const newList = list.filter(item => { return item.num > 0 })
+    return newList.map((item, index) => {
         return {
           num: item.num,
           to: {
@@ -46,7 +46,7 @@ class Confirm extends Component {
           desc: <div className={styles.record_numbox} />
         }
       }
-    })
+    )
   }
 
   render () {

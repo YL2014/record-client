@@ -1,4 +1,7 @@
 .record{
+  position: relative;
+  padding-bottom: 66px;
+
   &_inputbox,&_goods{
     background: #fff;
     padding:10px 15px;
@@ -34,6 +37,11 @@
     border-left: none;
   }
   &_next{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
     padding:10px 15px;
   }
   &_goods :global .weui-cell__hd{

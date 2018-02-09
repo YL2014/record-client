@@ -10,6 +10,7 @@ export default class List extends Component {
     return <div className={className} {...other}>
       {
         dataSource && dataSource.map((item, index) => {
+          if (!item) return null
           const { label, title, desc, icon, rank, lprice, tprice, zprice, ...res } = item
           return <Cell {...res} key={index}>
             { icon && <CellHeader>
