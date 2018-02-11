@@ -5,7 +5,11 @@ import Toast from 'Gb/components/Toast'
 import Helper from 'Gb/utils/helper'
 import ajax from 'Gb/utils/ajax'
 import { API } from './constants'
+import ImageCompressor from 'image-compressor.js'
 import styles from './index.scss'
+
+// 压缩图片
+const CompressorInstance = new ImageCompressor()
 
 class UserAdd extends Component {
   constructor () {
@@ -46,10 +50,11 @@ class UserAdd extends Component {
       return
     }
     const data = await ajax.post(API.add, {
-      username, telephone, idCard, wx, boss
+      username, telephone, idCard, wx, boss, idCardDownUrl, idCardUpUrl
     })
     if (data) {
       Toast.success('提交成功')
+      this.resetForm()
     }
   }
 
@@ -74,8 +79,13 @@ class UserAdd extends Component {
       curFile = 'idCardDownUrl'
     }
     if (file) {
+      const compressFile = await CompressorInstance.compress(file, { quality: .6 })
+      if (!compressFile) {
+        Toast('图片压缩失败')
+        return
+      }
       const params = new FormData()
-      params.append('file', file)
+      params.append('file', compressFile, compressFile.name)
       const data = await ajax.upload(API.upload, params)
       if (data) {
         this.setState({ [curFile]: data.url })
@@ -111,7 +121,7 @@ class UserAdd extends Component {
           <CellHeader>身份证正面照</CellHeader>
           <CellBody className={styles.useradd_upload}>
             <div className='weui-uploader__input-box'>
-              <input ref={(node) => {this.upFileNode = node}} className='weui-uploader__input' type="file" capture onChange={this.uploadImg.bind(this, 'up')} accept='image/*'/>
+              <input ref={(node) => {this.upFileNode = node}} className='weui-uploader__input' type="file" onChange={this.uploadImg.bind(this, 'up')} accept='image/*'/>
             </div>
           </CellBody>
           <CellFooter>
@@ -122,7 +132,7 @@ class UserAdd extends Component {
           <CellHeader>身份证反面照</CellHeader>
           <CellBody className={styles.useradd_upload}>
             <div className='weui-uploader__input-box'>
-              <input ref={(node) => {this.downFileNode = node}} className='weui-uploader__input' type="file" capture onChange={this.uploadImg.bind(this, 'down')} accept='image/*'/>
+              <input ref={(node) => {this.downFileNode = node}} className='weui-uploader__input' type="file" onChange={this.uploadImg.bind(this, 'down')} accept='image/*'/>
             </div>
           </CellBody>
           <CellFooter>

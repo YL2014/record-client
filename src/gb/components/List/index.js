@@ -11,7 +11,7 @@ export default class List extends Component {
       {
         dataSource && dataSource.map((item, index) => {
           if (!item) return null
-          const { label, title, desc, icon, rank, lprice, tprice, zprice, ...res } = item
+          const { label, title, desc, icon, ...res } = item
           return <Cell {...res} key={index}>
             { icon && <CellHeader>
               <img src={icon} className='gb_list_icon' alt='icon' />
@@ -19,10 +19,6 @@ export default class List extends Component {
             { (label && !icon) && <CellHeader>{label}</CellHeader> }
             <CellBody>
               {title}
-              {rank && <div className='showprice' >
-                <span className='lprice'>￥{lprice}</span>
-                <span className='realprice'>￥{ rank === 3 ? tprice : zprice}</span>
-              </div>}
             </CellBody>
             { desc && <CellFooter>{desc}</CellFooter> }
           </Cell>

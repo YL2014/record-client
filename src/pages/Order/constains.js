@@ -12,8 +12,8 @@ export const API = {
 
 // 订单状态
 export const ORDER_STATUS = {
-  0: '待审核',
-  1: '待审核',
+  0: '待总代审核',
+  1: '待公司审核',
   2: '已审核',
   3: '已发货'
 }

@@ -3,8 +3,9 @@ import axios from 'axios'
 import Toast from 'Gb/components/Toast'
 
 axios.defaults = Object.assign(axios.defaults, {
-  baseURL: 'http://127.0.0.1:7001',
-  timeout: 3000,
+  baseURL: process.env.API_URL || 'http://127.0.0.1:7001',
+  // baseURL: 'http://192.168.0.102/7001',
+  timeout: 5000,
   withCredentials: true
 })
 
@@ -31,6 +32,7 @@ axios.interceptors.response.use(function (response) {
   }
   return data.data
 }, function (error) {
+  console.log(error, JSON.stringify(error))
   Toast('网络异常，请稍后再试')
   return Promise.resolve(null)
 })
@@ -38,11 +40,22 @@ axios.interceptors.response.use(function (response) {
 const ajax = {}
 
 // 文件上传
-ajax.upload = (url, params) => {
-  return axios.post(url, params, {
+ajax.upload = (url, params, progressCallback) => {
+  // return axios.post(url, params, {
+  //   headers: {
+  //     'Content-Type': 'multipart/form-data'
+  //   },
+  //   timeout: 10000
+  // })
+  return axios({
+    method: 'POST',
+    url: url,
+    data: params,
+    timeout: 2000,
     headers: {
-      'Content-Type': 'multipart/form-data'
-    }
+      'Content-Type': 'multipart/*'
+    },
+    onUploadProgress: progressCallback
   })
 }
 
@@ -55,17 +68,8 @@ ajax.get = (url, params) => {
 ajax.post = (url, params) => {
   return axios(url, {
     method: 'post',
-    // data: qs.stringify(params),
     data: params
-    // header: {
-    //   'Content-Type': 'application/x-www-form-urlencoded'
-    // }
   })
-  // return axios.post(url, qs.stringify(params), {
-  //   headers: {
-  //     'Content-Type': 'application/x-www-form-urlencoded'
-  //   }
-  // })
 }
 
 export default ajax

@@ -21,12 +21,9 @@ export default class TabBar extends Component {
       }
     ]
     if (role === 1) {
-      list.push({pathname: '/manage', title: '管理审核', icon: present, iconFill: present_fill})
-    } else if (role === 2) {
-      list.push({pathname: '/manage', title: '管理审核', icon: present, iconFill: present_fill})
-      list.push({pathname: '/record', title: '订单录入', icon: home, iconFill: home_fill})
+      list.unshift({pathname: '/manage', title: '管理审核', icon: present, iconFill: present_fill})
     } else {
-      list.push({pathname: '/record', title: '订单录入', icon: home, iconFill: home_fill})
+      list.unshift({pathname: '/record', title: '订单录入', icon: home, iconFill: home_fill})
     }
     this.setState({ list: list })
   }

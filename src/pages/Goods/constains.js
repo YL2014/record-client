@@ -7,6 +7,7 @@ export const UPLOAD_FAIL = 'UPLOAD_FAIL'
 export const RESET_ADD = 'RESET_ADD'
 export const INIT_UPDATE = 'INIT_UPDATE'
 export const SET_UPDATE = 'SET_UPDATE'
+export const SET_UPLOAD_PROGRESS = 'SET_UPLOAD_PROGRESS'
 
 export const API = {
   list: '/goods',

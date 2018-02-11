@@ -1,6 +1,7 @@
 import ajax from 'Gb/utils/ajax'
 import { push, replace } from 'react-router-redux'
 import Toast from 'Gb/components/Toast'
+import ImageCompressor from 'image-compressor.js'
 
 import {
   INIT_GOODS,
@@ -10,6 +11,7 @@ import {
   RESET_ADD,
   INIT_UPDATE,
   SET_UPDATE,
+  SET_UPLOAD_PROGRESS,
   // UPLOAD_FAIL,
   API } from './constains'
 
@@ -50,20 +52,41 @@ const fetchCategory = (params) => {
   }
 }
 
-// upload img
 const uploadImg = (file, status) => {
-  const params = new FormData()
-  params.append('file', file)
+  // 压缩图片
+  const CompressorInstance = new ImageCompressor()
   return async (dispatch) => {
-    const data = await ajax.upload(API.upload, params)
-    if (data) {
-      dispatch({
-        type: UPLOAD_SUCCESS,
-        data: data.url,
-        status
+    const compressFile = await CompressorInstance.compress(file, { quality: .6 })
+    if (compressFile) {
+      const params = new FormData()
+      params.append('file', compressFile, compressFile.name)
+      const data = await ajax.upload(API.upload, params, (progressEvent) => {
+        let precent = Math.round(progressEvent.loaded * 100 / progressEvent.total)
+        console.log(precent)
+        if (precent % 5 === 0) {
+          dispatch({
+            type: SET_UPLOAD_PROGRESS,
+            data: precent
+          })
+        }
+        if (precent === 100) {
+          dispatch({
+            type: SET_UPLOAD_PROGRESS,
+            data: 0
+          })
+        }
       })
+      if (data) {
+        dispatch({
+          type: UPLOAD_SUCCESS,
+          data: data.url,
+          status
+        })
+      } else {
+        Toast.info('上传失败，请重试')
+      }
     } else {
-      Toast.info('上传失败，请重试')
+      Toast('上传失败')
     }
   }
 }

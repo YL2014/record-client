@@ -23,19 +23,23 @@
     width: 40px;
     text-align: center;
     border:1px solid #999;
+    font-size: 14px;
+    outline: none;
   }
   &_sub,&_add{
-    width:20px;
-    height: 20px;
+    width:30px;
+    height: 30px;
     border:1px solid #999;
     text-align: center;
-    line-height: 20px;
+    line-height: 30px;
   }
   &_sub{
     border-right: none;
+    border-radius: 8px 0 0 8px;
   }
   &_add{
     border-left: none;
+    border-radius: 0 8px 8px 0;
   }
   &_next{
     position: fixed;
@@ -47,9 +51,11 @@
   }
   &_goods :global .weui-cell__hd{
     width: 90px;
-    margin-right: 5px;
+    height: 90px;
+    margin-right: 10px;
     img{
       width: 100%;
+      height: 100%;
     }
   }
   &_buygoods{
@@ -63,4 +69,29 @@
       color: red;
     }
   }
+
+  .goods_title {
+    height: 40px;
+    line-height: 20px;
+    overflow: hidden;
+  }
+}
+
+.showprice{
+  span{
+    display: block;
+  }
+  .lprice{
+    text-decoration: line-through;
+    font-size: 14px;
+    color: #000;
+  }
+  .realprice{
+    color: red;
+    font-size: 16px;
+  }
+}
+
+.orderconfirm_user {
+  background-color: #fff;
 }

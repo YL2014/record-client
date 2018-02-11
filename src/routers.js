@@ -34,6 +34,8 @@ import Confirm from 'Pages/Record/confirm.js'
 import Order from 'Pages/Order'
 import OrderDetail from 'Pages/Order/detail'
 
+import QrCode from 'Pages/Qrcode'
+
 const adminPath = ['/manage', '/goods', '/goodsadd', '/goodsdetail', '/goodsupdate',
   '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck', '/ordercheck', '/usercheck', '/userchecks']
 const zongPath = ['/manage', '/ordercheck', '/usercheck', '/userchecks']
@@ -88,6 +90,7 @@ const Root = ({ store, history }) => (
         <PrivateRoute path='/userchecks' component={UserCheckDetail} />
         <PrivateRoute path='/order' component={Order} />
         <PrivateRoute path='/orderdetail' component={OrderDetail} />
+        <PrivateRoute path='/qrcode' component={QrCode} />
       </Base>
     </ConnectedRouter>
   </Provider>

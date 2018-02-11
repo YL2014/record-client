@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import List from 'Gb/components/List'
 import LinkList from 'Gb/components/LinkList'
 import TabBar from 'Gb/components/TabBar'
-import { goods, my, text } from 'Gb/icons'
+import { my, text, qr_code, group } from 'Gb/icons'
 import styles from './index.scss'
 
 class UserIndex extends Component {
@@ -14,17 +14,31 @@ class UserIndex extends Component {
   }
 
   setRoleList (role) {
-    let dataSource = [
-      { to: '/order', title: '订单管理', icon: text }
-    ]
-    if (role === 1 || role === 2) {
-      const curUser = JSON.parse(localStorage.getItem('user'))
-      // const curRole = curUser.role
-      const curUserId = curUser.id
-      dataSource = dataSource.concat([
-        {to: '/group', icon: goods, title: '团队管理'},
-        {to: {pathname: '/useradd', search: `?id=${curUserId}`, state: { id: curUserId }}, icon: my, title: '新增代理'}
-      ])
+    const curUser = JSON.parse(localStorage.getItem('user'))
+    const curUserId = curUser.id
+    let dataSource = []
+    if (role === 1) {
+      dataSource = [
+        // {to: '/group', icon: group, title: '团队管理'},
+        {to: '/usercheck', icon: text, title: '代理审核'},
+        {to: {pathname: '/useradd', search: `?id=${curUserId}`, state: { id: curUserId }}, icon: my, title: '新增代理'},
+        {to: {pathname: '/qrcode', search: `?id=${curUserId}`}, icon: qr_code, title: '公司授权码'}
+      ]
+    }
+    if (role === 2) {
+      dataSource = [
+        { to: '/order', title: '我的订单管理', icon: text },
+        { to: { pathname: '/order', state: { type: 1 } }, title: '代理订单管理', icon: text },
+        // {to: '/group', icon: group, title: '团队管理'},
+        {to: '/usercheck', icon: text, title: '代理审核'},
+        {to: {pathname: '/useradd', search: `?id=${curUserId}`, state: { id: curUserId }}, icon: my, title: '新增代理'},
+        {to: {pathname: '/qrcode', search: `?id=${curUserId}`}, icon: qr_code, title: '我的授权证书'}
+      ]
+    }
+    if (role === 3) {
+      dataSource = [
+        { to: '/order', title: '订单管理', icon: text }
+      ]
     }
     this.setState({ dataSource })
   }

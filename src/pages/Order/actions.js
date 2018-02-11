@@ -7,7 +7,7 @@ import {
 } from './constains'
 
 // 获取列表
-export const fetchList = (params = {}) => {
+const fetchList = (params = {}) => {
   return async (dispatch, getState) => {
     const { list = [] } = getState().order
     const data = await ajax.get(API.list, params)
@@ -27,7 +27,7 @@ export const fetchList = (params = {}) => {
 }
 
 // 获取详情
-export const fetchDetail = (id) => {
+const fetchDetail = (id) => {
   return async (dispatch) => {
     const data = await ajax.get(`${API.list}/${id}`)
     if (data) {

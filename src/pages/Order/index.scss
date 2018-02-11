@@ -2,3 +2,25 @@
   margin-top: 20px;
   background-color: #fff;
 }
+
+.orderdetail {
+  :global .gb_list_icon {
+    width: 90px;
+    height: 90px;
+    margin-right: 10px;
+  }
+
+  &_gname {
+    height: 40px;
+    line-height: 20px;
+    overflow: hidden;
+  }
+
+  &_price {
+    color: red;
+  }
+
+  &_block {
+    background: #fff;
+  }
+}

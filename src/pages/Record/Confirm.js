@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import List from 'Gb/components/List'
 import recordActions from './actions'
 import { CellsTitle, Button } from 'react-weui'
+import Helper from 'Gb/utils/helper'
 
 import styles from './index.scss'
 
@@ -23,20 +24,30 @@ class Confirm extends Component {
   toRecordPage () {
     this.props.history.goBack()
   }
+
   submitRecord () {
     const param = this.state.order
     this.props.actions.submitOrder(param)
   }
 
   filterList () {
-    const { list } = this.props.record
+    const { list, customerInfo: cusInfos } = this.props.record
+    if (!(list && cusInfos)) return null
     const rank = JSON.parse(window.localStorage.getItem('user'))
-    let orderInfo = {}
-    let cusInfos = this.props.record.customerInfo
-    let cusInfo = cusInfos ? cusInfos.split(',') : []
-    orderInfo = {'user': {'name': cusInfo[0], 'mobile': cusInfo[1], 'address': cusInfo[2]}}
+    const cusInfo = cusInfos.split('，')
+    let [ name, mobile, address ] = cusInfo
+    if (!Helper.reg.telephone.test(mobile)) {
+      let newAddress = mobile
+      mobile = address
+      address = newAddress
+    }
+    const orderInfo = {'user': {'name': name, 'mobile': mobile, 'address': address}}
+    const renderUserInfo = [
+      {title: '客户姓名', desc: name},
+      {title: '客户电话', desc: mobile},
+      {title: '客户地址', desc: address}
+    ]
     let goods = []
-    if (!list) return null
     let total = 0
     let newList = list.filter(item => {
       total += rank.role === 2 ? item.zprice * item.num : item.tprice * item.num
@@ -45,17 +56,14 @@ class Confirm extends Component {
     newList = newList.map((item, index) => {
       goods.push({'id': item.id, 'num': item.num})
       return {
-        num: item.num,
-        to: {
-          pathname: '/goods/detail',
-          state: item
-        },
-        title: item.name,
+        title: <div>
+          <p className={styles.goods_title}>{item.name}</p>
+          <div className={styles.showprice} >
+            {/* <del className={styles.lprice}>￥{item.lprice}</del> */}
+            <span className={styles.realprice}>￥{ rank.role === 3 ? item.tprice : item.zprice}</span>
+          </div>
+        </div>,
         icon: item.image,
-        lprice: item.lprice,
-        zprice: item.zprice,
-        tprice: item.tprice,
-        rank: rank.role, // 表示级别
         desc: <div className={styles.record_numbox}>x{item.num}</div>
       }
     })
@@ -63,7 +71,8 @@ class Confirm extends Component {
     this.setState({
       total,
       goodsList: newList,
-      order: orderInfo
+      order: orderInfo,
+      renderUserInfo
     })
   }
 
@@ -72,27 +81,18 @@ class Confirm extends Component {
   }
 
   render () {
-    let cusInfos = this.props.record.customerInfo
-    let cusInfo = cusInfos ? cusInfos.split(',') : []
-    const { total, goodsList: list } = this.state
+    const { total, goodsList: list, renderUserInfo } = this.state
     return (
       <div>
         <CellsTitle>客户信息：</CellsTitle>
-        <div className={styles.record_inputbox}>
-          <p><label htmlFor='cusname'>客户姓名：</label>
-            <span id='cusname'>{cusInfo[0]}</span></p>
-          <p><label htmlFor='cusphone'>客户电话：</label>
-            <span id='cusphone'>{cusInfo[1]}</span></p>
-          <p><label htmlFor='cusaddress'>客户地址：</label>
-            <span id='cusaddress'>{cusInfo[2]}</span></p>
-        </div>
+        <List className={styles.orderconfirm_user} dataSource={renderUserInfo} />
         <CellsTitle>商品信息：</CellsTitle>
         <div className={`${styles.record_goods} ${styles.record_buygoods}`}>
           <List dataSource={list} />
         </div>
         <p className={styles.record_total}>总价：<span>￥{total}</span></p>
         <div className={styles.record_next}>
-          <Button onClick={this.toRecordPage}>上一步</Button>
+          <Button type='default' onClick={this.toRecordPage}>上一步</Button>
           <Button onClick={this.submitRecord}>提交</Button>
         </div>
       </div>

@@ -5,6 +5,5 @@ export const RESET_RECORD = 'RESET_RECORD'
 
 export const API = {
   list: '/goods',
-  add: '/goods/add',
   submit: '/order/add'
 }

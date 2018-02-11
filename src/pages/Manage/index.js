@@ -13,10 +13,14 @@ class Manage extends Component {
         {to: '/goodsadd', icon: goods, title: '上架商品'},
         {to: '/category', icon: text, title: '商品分类'},
         {to: '/categoryadd', icon: text, title: '添加商品分类'},
-        {to: '/usercheck', icon: text, title: '代理审核'}
+        // {to: '/usercheck', icon: text, title: '代理审核'}
       ]
     }
   }
+
+  // componentDidMount () {
+
+  // }
 
   render () {
     const { dataSource } = this.state

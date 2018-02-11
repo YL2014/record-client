@@ -71,7 +71,7 @@ class CategoryList extends Component {
         },
         title: item.name,
         desc: <div>
-          <img onClick={this.remove.bind(this, item._id)} className={styles.change_icon} src={close} alt='icon' />
+          {/* <img onClick={this.remove.bind(this, item._id)} className={styles.change_icon} src={close} alt='icon' /> */}
           <img onClick={this.update.bind(this, item._id)} className={styles.change_icon} src={write} alt='icon' />
         </div>
       }

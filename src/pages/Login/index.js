@@ -49,7 +49,7 @@ class Login extends Component {
       <div>
         <Form>
           <InputWithLabel name='username' value={username} label='用户名' placeholder='请输入用户名' onChange={this.handleOnChange} />
-          <InputWithLabel name='password' value={password} label='密码' placeholder='请输入密码' onChange={this.handleOnChange} />
+          <InputWithLabel name='password' value={password} label='密码' placeholder='请输入密码' onChange={this.handleOnChange} type='password' />
         </Form>
         <Form className={styles.login_remember} checkbox>
           <FormCell checkbox className={styles.login_remember_checkbox}>

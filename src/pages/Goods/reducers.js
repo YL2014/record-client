@@ -6,7 +6,8 @@ import {
   UPLOAD_FAIL,
   RESET_ADD,
   INIT_UPDATE,
-  SET_UPDATE
+  SET_UPDATE,
+  SET_UPLOAD_PROGRESS
 } from './constains'
 
 const INITIAL_STATE = {
@@ -68,6 +69,8 @@ const goods = (state = INITIAL_STATE, action) => {
     // 上传图片失败
     case UPLOAD_FAIL:
       return { ...state, uploadStatus: false }
+    case SET_UPLOAD_PROGRESS:
+      return { ...state, uploadProgress: action.data}
     // 初始化更新页面数据
     case INIT_UPDATE:
       return {

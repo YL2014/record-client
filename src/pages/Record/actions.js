@@ -33,7 +33,7 @@ const submitOrder = (params) => {
       Toast.success('提交成功')
       dispatch(resetRecord())
       setTimeout(() => {
-        dispatch(replace('/record'))
+        dispatch(replace('/user'))
       }, 1000)
     }
   }

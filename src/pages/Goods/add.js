@@ -49,7 +49,8 @@ class GoodsAdd extends Component {
   }
 
   render () {
-    const { name, bprice, zprice, tprice, lprice, apply, category, image } = this.props.goods.add
+    const { add, uploadProgress } = this.props.goods
+    const { name, bprice, zprice, tprice, lprice, apply, category, image } = add
     return <div className={styles.goodsadd}>
       <InputWithLabel value={name} name='name' onChange={this.handleChange} label='商品名称' maxLength='16' />
       <InputWithLabel value={bprice} name='bprice' onChange={this.handleChange} label='进价' type='number' maxLength='10' />
@@ -64,11 +65,18 @@ class GoodsAdd extends Component {
         </CellHeader>
         <CellBody className={styles.goodsadd_upload}>
           <div className='weui-uploader__input-box'>
-            <input ref={(node) => {this.fileNode = node}} className='weui-uploader__input' type="file" capture onChange={this.uploadImg} accept='image/*'/>
+            <input ref={(node) => {this.fileNode = node}} className='weui-uploader__input' type="file" onChange={this.uploadImg} accept='image/*'/>
           </div>
         </CellBody>
         <CellFooter>
           { image && <img className={styles.goodsadd_upload_img} src={image} alt='upload' /> }
+          { !!(uploadProgress && uploadProgress > 0) && <div>
+            <p>上传进度：</p>
+            <div>
+              <p>{uploadProgress}%</p>
+            </div>
+          </div>
+          }
         </CellFooter>
       </Cell>
       <div className={styles.goodsadd_btn}>
