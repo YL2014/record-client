@@ -23,6 +23,7 @@ class UserIndex extends Component {
         { to: '/order', icon: text, title: '订单管理' },
         {to: '/usercheck', icon: text, title: '代理审核'},
         {to: {pathname: '/useradd', search: `?id=${curUserId}`, state: { id: curUserId }}, icon: my, title: '新增代理'},
+        {to: '/statistic', icon: text, title: '统计'},
         {to: {pathname: '/qrcode', search: `?id=${curUserId}`}, icon: qr_code, title: '公司授权码'}
       ]
     }
@@ -33,12 +34,14 @@ class UserIndex extends Component {
         // {to: '/group', icon: group, title: '团队管理'},
         {to: '/usercheck', icon: text, title: '代理审核'},
         {to: {pathname: '/useradd', search: `?id=${curUserId}`, state: { id: curUserId }}, icon: my, title: '新增代理'},
+        {to: '/statistic', icon: text, title: '统计'},
         {to: {pathname: '/qrcode', search: `?id=${curUserId}`}, icon: qr_code, title: '我的授权证书'}
       ]
     }
     if (role === 3) {
       dataSource = [
-        { to: '/order', title: '订单管理', icon: text }
+        { to: '/order', title: '订单管理', icon: text },
+        { to: '/statistic', icon: text, title: '统计' }
       ]
     }
     this.setState({ dataSource })
