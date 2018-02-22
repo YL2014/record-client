@@ -82,7 +82,7 @@ class OrderList extends Component {
         this.setState({
           options: [
             { label: '公司已审核', value: 2 },
-            { label: '我已审核', value: 2 },
+            { label: '我已审核', value: 1 },
             { label: '待审核', value: 0 },
             { label: '已发货', value: 3 }
           ]

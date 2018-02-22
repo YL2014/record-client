@@ -1,4 +1,5 @@
 import ajax from 'Gb/utils/ajax'
+import Toast from 'Gb/components/Toast'
 
 import {
   INIT_ORDER,
@@ -39,7 +40,21 @@ const fetchDetail = (id) => {
   }
 }
 
+// 订单审核与驳回
+const check = (id, type = 0, driver) => {
+  const params = { id, type }
+  if (driver) params.driver = driver
+  return async (dispatch) => {
+    const data = await ajax.get(`${API.check}`, params)
+    if (data) {
+      Toast.success('操作成功')
+      dispatch(fetchDetail(id))
+    }
+  }
+}
+
 export default {
   fetchList,
-  fetchDetail
+  fetchDetail,
+  check
 }

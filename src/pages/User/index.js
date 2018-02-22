@@ -20,6 +20,7 @@ class UserIndex extends Component {
     if (role === 1) {
       dataSource = [
         // {to: '/group', icon: group, title: '团队管理'},
+        { to: '/order', icon: text, title: '订单管理' },
         {to: '/usercheck', icon: text, title: '代理审核'},
         {to: {pathname: '/useradd', search: `?id=${curUserId}`, state: { id: curUserId }}, icon: my, title: '新增代理'},
         {to: {pathname: '/qrcode', search: `?id=${curUserId}`}, icon: qr_code, title: '公司授权码'}

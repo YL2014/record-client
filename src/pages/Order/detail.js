@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Page, CellsTitle } from 'react-weui'
+import { Page, CellsTitle, Button, ButtonArea } from 'react-weui'
 import List from 'Gb/components/List'
 import orderActions from './actions'
 import Helper from 'Gb/utils/helper'
@@ -14,6 +14,13 @@ class OrderDetail extends Component {
     this.state = {}
     this.fetchDetail = this.fetchDetail.bind(this)
     this.filterDetail = this.filterDetail.bind(this)
+    this.check = this.check.bind(this)
+  }
+
+  check (type) {
+    const id = Helper.getQueryParam('id')
+    const { check } = this.props.actions
+    check && check(id, type)
   }
 
   fetchDetail () {
@@ -55,12 +62,22 @@ class OrderDetail extends Component {
     if (!detail) return null
     const { user, goods } = this.filterDetail()
     if (!user || !goods) return null
+    const { role } = JSON.parse(localStorage.getItem('user'))
+    const { status } = this.props.order.detail
+    console.log(role, detail.status)
     return <Page ptr={false}>
       <div className={styles.orderdetail}>
         <CellsTitle>客户信息：</CellsTitle>
         <List className={styles.orderdetail_block} dataSource={user} />
         <CellsTitle>客户信息：</CellsTitle>
         <List className={styles.orderdetail_block} dataSource={goods} />
+        {
+          ((role === 2 && status === 0) || (role === 1 && status === 1)) &&
+          <ButtonArea direction='horizontal'>
+            <Button onClick={this.check.bind(this, 1)} type='warn'>驳回</Button>
+            <Button onClick={this.check.bind(this, 0)}>审核</Button>
+          </ButtonArea>
+        }
       </div>
     </Page>
   }
