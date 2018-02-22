@@ -24,9 +24,11 @@ class OrderList extends Component {
 
   filterList () {
     const { list } = this.props.order
+    const curUser = JSON.parse(localStorage.getItem('user'))
+    const { role } = curUser
     if (list) {
       return list.map(item => {
-        return {
+        const itemObj = {
           to: {
             pathname: '/orderdetail',
             state: item,
@@ -35,6 +37,25 @@ class OrderList extends Component {
           title: item.user.name,
           desc: item.user.mobile
         }
+        if (role === 1) {
+          if (item.orderType === 1) {
+            itemObj.label = item.user.name
+            itemObj.title = `总代:${item.owner.username}`
+          } else {
+            itemObj.label = item.user.name
+            itemObj.title = `总代:${item.ownerBoss.username}`
+          }
+        }
+        if (role === 2) {
+          if (item.orderType === 1) {
+            itemObj.label = item.user.name
+            itemObj.title = `总代:${item.owner.username}`
+          } else {
+            itemObj.label = item.user.name
+            itemObj.title = `特代:${item.owner.username}`
+          }
+        }
+        return itemObj
       })
     }
   }

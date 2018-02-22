@@ -62,7 +62,6 @@ class UserAdd extends Component {
     this.setState({
       username: '',
       telephone: '',
-      boss: null,
       idCard: '',
       idCardUpUrl: '',
       idCardDownUrl: '',

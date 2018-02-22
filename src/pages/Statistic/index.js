@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import InputWithLabel from 'Gb/components/InputWithLabel'
 import List from 'Gb/components/List'
+import { CellsTitle } from 'react-weui'
 import statisticActions from './actions'
 
 import styles from './index.scss'
@@ -14,12 +15,13 @@ class StatisticComponent extends Component {
       startTime: '',
       endTime: ''
     }
-    this.setTime = this.setTime.bind(this)
+    this.setSearchTime = this.setSearchTime.bind(this)
     this.getStatistic = this.getStatistic.bind(this)
     this.renderStatistic = this.renderStatistic.bind(this)
   }
 
-  setTime (e) {
+  setSearchTime (e) {
+    console.log(e)
     const { name, value } = e.target
     this.setState({
       [name]: value
@@ -46,7 +48,8 @@ class StatisticComponent extends Component {
         return <span className={styles.statistic_goodsitem} key={index}>{item.name}({item.num})</span>
       }) }
     ]
-    return <div>
+    return <div className={styles.statistic_myorder}>
+      <CellsTitle>我的订单</CellsTitle>
       <List dataSource={dataSource} />
     </div>
   }
@@ -58,9 +61,11 @@ class StatisticComponent extends Component {
   render () {
     const { startTime, endTime } = this.state
     return <div className={styles.statistic}>
-      <InputWithLabel label='开始时间' name='startTime' value={startTime} onChange={this.setTime} type='datetime-local' />
-      <InputWithLabel label='结束时间' name='endTime' value={endTime} onChange={this.setTime} type='datetime-local' />
-      {this.renderStatistic()}
+    <div className={styles.statistic_condition}>
+      <InputWithLabel label='开始时间' name='startTime' value={startTime} onChange={this.setSearchTime} type='datetime-local' />
+      <InputWithLabel label='结束时间' name='endTime' value={endTime} onChange={this.setSearchTime} type='datetime-local' />
+    </div>
+    {this.renderStatistic()}
     </div>
   }
 }

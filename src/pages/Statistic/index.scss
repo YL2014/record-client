@@ -1,10 +1,14 @@
 .statistic {
   margin-top: 20px;
-  background-color: #fff;
   :global {
     .weui-cell__bd {
       min-width: 80px;
     }
+  }
+
+  &_condition,
+  &_myorder {
+    background-color: #fff;
   }
 
   &_goodsitem {

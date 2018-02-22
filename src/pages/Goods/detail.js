@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 import List from 'Gb/components/List'
 import Dialog from 'Gb/components/Dialog'
-import { Page, Flex, Button } from 'react-weui'
+import { Flex, Button } from 'react-weui'
 import goodsActions from './actions'
 
 import styles from './index.scss'
@@ -76,35 +76,33 @@ class GoodsDetail extends Component {
     const { dataSource, showStatus, showRemove } = this.state
     const { state ={} } = this.props.location
     const status = state.status || 0
-    return <Page ptr={false}>
-      <div className={styles.goodsdetail}>
-        <List dataSource={dataSource} />
-        <Flex>
-          { status === 0 &&
-          <div className='weui-flex__item'>
-            <Link to={{ pathname: '/goodsupdate', state: state }} style={{color: '#fff'}}>
-            <Button type='primary' size='middle'>更新</Button>
-            </Link>
-          </div> }
-          <div className='weui-flex__item'><Button type='default' size='middle' onClick={this.showSetStatus}>{status === 0 ? '下架' : '上架'}</Button></div>
-          <div className='weui-flex__item'><Button type='warn' size='middle' onClick={this.showRemove}>删除</Button></div>
-        </Flex>
-        <Dialog
-          show={showStatus}
-          hideDialog={() => this.setState({ showStatus: false })}
-          ok={this.setGoodsStatus}
-        >
-          确定{status === 0 ? '下架' : '上架'}该商品？
-        </Dialog>
-        <Dialog
-          show={showRemove}
-          hideDialog={() => this.setState({ showRemove: false })}
-          ok={this.removeGoods}
-        >
-          确定删除该商品?
-        </Dialog>
-      </div>
-    </Page>
+    return <div className={styles.goodsdetail}>
+      <List dataSource={dataSource} />
+      <Flex>
+        { status === 0 &&
+        <div className='weui-flex__item'>
+          <Link to={{ pathname: '/goodsupdate', state: state }} style={{color: '#fff'}}>
+          <Button type='primary' size='middle'>更新</Button>
+          </Link>
+        </div> }
+        <div className='weui-flex__item'><Button type='default' size='middle' onClick={this.showSetStatus}>{status === 0 ? '下架' : '上架'}</Button></div>
+        <div className='weui-flex__item'><Button type='warn' size='middle' onClick={this.showRemove}>删除</Button></div>
+      </Flex>
+      <Dialog
+        show={showStatus}
+        hideDialog={() => this.setState({ showStatus: false })}
+        ok={this.setGoodsStatus}
+      >
+        确定{status === 0 ? '下架' : '上架'}该商品？
+      </Dialog>
+      <Dialog
+        show={showRemove}
+        hideDialog={() => this.setState({ showRemove: false })}
+        ok={this.removeGoods}
+      >
+        确定删除该商品?
+      </Dialog>
+    </div>
   }
 }
 

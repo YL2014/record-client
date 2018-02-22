@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Page, CellsTitle, Button, ButtonArea } from 'react-weui'
+import { CellsTitle, Cell, CellBody, CellFooter, Button, ButtonArea } from 'react-weui'
 import List from 'Gb/components/List'
 import orderActions from './actions'
 import Helper from 'Gb/utils/helper'
@@ -63,23 +63,47 @@ class OrderDetail extends Component {
     const { user, goods } = this.filterDetail()
     if (!user || !goods) return null
     const { role } = JSON.parse(localStorage.getItem('user'))
-    const { status } = this.props.order.detail
+    const { status, orderType, owner, ownerBoss, total, totalNum } = this.props.order.detail
     console.log(role, detail.status)
-    return <Page ptr={false}>
-      <div className={styles.orderdetail}>
-        <CellsTitle>客户信息：</CellsTitle>
-        <List className={styles.orderdetail_block} dataSource={user} />
-        <CellsTitle>客户信息：</CellsTitle>
-        <List className={styles.orderdetail_block} dataSource={goods} />
-        {
-          ((role === 2 && status === 0) || (role === 1 && status === 1)) &&
-          <ButtonArea direction='horizontal'>
-            <Button onClick={this.check.bind(this, 1)} type='warn'>驳回</Button>
-            <Button onClick={this.check.bind(this, 0)}>审核</Button>
-          </ButtonArea>
-        }
+    return <div className={styles.orderdetail}>
+      <CellsTitle>客户信息：</CellsTitle>
+      <List className={styles.orderdetail_block} dataSource={user} />
+      {
+        role === 1 && <div>
+          <Cell className={styles.orderdetail_owner}>
+              <CellBody>所属总代</CellBody>
+              <CellFooter>{orderType === 1 ? owner.username : ownerBoss.username}</CellFooter>
+          </Cell>
+        </div>
+      }
+      {
+        (role === 2 && orderType === 2) && <div>
+          <Cell className={styles.orderdetail_owner}>
+              <CellBody>所属特代</CellBody>
+              <CellFooter>{owner.username}</CellFooter>
+          </Cell>
+        </div>
+      }
+      <CellsTitle>商品信息：</CellsTitle>
+      <List className={styles.orderdetail_block} dataSource={goods} />
+      <div className={styles.orderdetail_statistic}>
+        <Cell>
+          <CellBody>订单金额</CellBody>
+          <CellFooter className={styles.orderdetail_total}>&yen;{total}</CellFooter>
+        </Cell>
+        <Cell>
+          <CellBody>商品数量</CellBody>
+          <CellFooter className={styles.orderdetail_totalnum}>{totalNum}</CellFooter>
+        </Cell>
       </div>
-    </Page>
+      {
+        ((role === 2 && status === 0) || (role === 1 && status === 1)) &&
+        <ButtonArea direction='horizontal'>
+          <Button onClick={this.check.bind(this, 1)} type='warn'>驳回</Button>
+          <Button onClick={this.check.bind(this, 0)}>审核</Button>
+        </ButtonArea>
+      }
+    </div>
   }
 }
 

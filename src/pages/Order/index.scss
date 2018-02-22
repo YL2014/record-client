@@ -1,6 +1,11 @@
 .order {
   margin-top: 20px;
   background-color: #fff;
+  :global {
+    .weui-cell__hd {
+      width: 100px;
+    }
+  }
 }
 
 .orderdetail {
@@ -8,6 +13,11 @@
     width: 90px;
     height: 90px;
     margin-right: 10px;
+  }
+
+  &_owner {
+    background-color: #fff;
+    margin-top: 20px;
   }
 
   &_gname {
@@ -22,5 +32,18 @@
 
   &_block {
     background: #fff;
+  }
+
+  &_statistic {
+    background-color: #fff;
+    margin-top: 20px;
+  }
+
+  &_total {
+    color: red;
+  }
+
+  &_totalnum {
+    color: green;
   }
 }
