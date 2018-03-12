@@ -21,6 +21,7 @@ const initCheckList = (type) => {
   }
 }
 
+// 审核
 const check = (id, type) => {
   return async (dispatch) => {
     const params = { id }
@@ -36,7 +37,18 @@ const check = (id, type) => {
   }
 }
 
+// 微信授权
+const auth = (code) => {
+  return async (dispatch) => {
+    const data = await ajax.get(API.auth, { code })
+    if (!data) {
+      Toast.warn('授权失败')
+    }
+  }
+}
+
 export default {
   initCheckList,
-  check
+  check,
+  auth
 }

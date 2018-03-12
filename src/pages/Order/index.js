@@ -8,10 +8,17 @@ import orderActions from './actions'
 // import { ORDER_STATUS } from './constains'
 import styles from './index.scss'
 
+const curUser = JSON.parse(localStorage.getItem('user'))
+console.log(curUser)
+
 class OrderList extends Component {
   constructor () {
     super()
-    this.state = { page: 1, status: 2, options: [] }
+    this.state = {
+      page: 1,
+      status: curUser.role === 3 ? 0 : 1,
+      options: []
+    }
     this.filterList = this.filterList.bind(this)
     this.fetchList = this.fetchList.bind(this)
     this.fetchMore = this.fetchMore.bind(this)
@@ -24,7 +31,6 @@ class OrderList extends Component {
 
   filterList () {
     const { list } = this.props.order
-    const curUser = JSON.parse(localStorage.getItem('user'))
     const { role } = curUser
     if (list) {
       return list.map(item => {
@@ -86,14 +92,14 @@ class OrderList extends Component {
 
   // 角色状态初始化
   initStatus () {
-    const curUser = JSON.parse(localStorage.getItem('user'))
     const { role } = curUser
     const { state } = this.props.location
     if (role === 1) {
       this.setState({
+        status: 1,
         options: [
-          { label: '已审核', value: 2 },
           { label: '待审核', value: 1 },
+          { label: '已审核', value: 2 },
           { label: '已发货', value: 3 }
         ]
       })
@@ -101,18 +107,20 @@ class OrderList extends Component {
     if (role === 2) {
       if (state && state.type === 1) {
         this.setState({
+          status: 0,
           options: [
+            { label: '待审核', value: 0 },
             { label: '公司已审核', value: 2 },
             { label: '我已审核', value: 1 },
-            { label: '待审核', value: 0 },
             { label: '已发货', value: 3 }
           ]
         })
       } else {
         this.setState({
+          status: 1,
           options: [
-            { label: '已审核', value: 2 },
             { label: '待审核', value: 1 },
+            { label: '已审核', value: 2 },
             { label: '已发货', value: 3 }
           ]
         })
@@ -120,10 +128,11 @@ class OrderList extends Component {
     }
     if (role === 3) {
       this.setState({
+        status: 0,
         options: [
-          { label: '已审核', value: 2 },
+          { label: '待总代审核', value: 0 },
           { label: '待公司审核', value: 1 },
-          { label: '待总代审核', value: 0 }
+          { label: '已审核', value: 2 }
         ]
       })
     }
@@ -152,9 +161,11 @@ class OrderList extends Component {
   }
 
   componentDidMount () {
-    const params = this.setQueryParams()
-    this.fetchList(params)
     this.initStatus()
+    setTimeout(() => {
+      const params = this.setQueryParams()
+      this.fetchList(params)
+    }, 0)
   }
 
   render() {

@@ -58,6 +58,7 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
 const REACT_APP = /^REACT_APP_/i;
 
 function getClientEnvironment(publicUrl) {
+  console.log('build type: ', process.env.BUILD_TYPE, ' node_env: ', process.env.NODE_ENV)
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
     .reduce(
@@ -74,7 +75,9 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
-        API_URL: process.env.NODE_ENV === 'development' ? "http://127.0.0.1:7001" : "http://hanfeiapi.frontjs.cc"
+        // API_URL: process.env.NODE_ENV === 'development' ? "http://127.0.0.1:7001" : "http://api.hanfeiguoyuan.top"
+        API_URL: process.env.NODE_ENV === 'development' ? "http://127.0.0.1:7001" :
+          process.env.BUILD_TYPE === 'test' ? "http://apitest.hanfeiguoyuan.top" : "http://api.hanfeiguoyuan.top"
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

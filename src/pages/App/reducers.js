@@ -1,4 +1,7 @@
-import { TESTTYPE } from './types'
+import {
+  TESTTYPE,
+  INIT_USER
+} from './constains'
 
 const INIT_STATES = {
   value: 'test'
@@ -10,6 +13,11 @@ export const app = (state = INIT_STATES, action) => {
       return {
         ...state,
         value: action.value
+      }
+    case INIT_USER:
+      return {
+        ...state,
+        user: action.data
       }
     default :
       return state

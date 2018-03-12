@@ -30,6 +30,7 @@
     "html-webpack-plugin": "2.29.0",
     "image-compressor.js": "^1.0.0",
     "jest": "20.0.4",
+    "moment": "^2.20.1",
     "node-sass": "^4.7.2",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
@@ -64,7 +65,8 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build:test": "BUILD_TYPE=test node scripts/build.js",
+    "build": "BUILD_TYPE=prod node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {

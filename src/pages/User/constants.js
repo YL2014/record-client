@@ -4,5 +4,6 @@ export const API = {
   add: '/user/add',
   upload: '/upload',
   checklist: '/user/checklist',
-  check: '/user/check'
+  check: '/user/check',
+  auth: '/user/auth'
 }

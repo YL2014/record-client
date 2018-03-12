@@ -1,5 +1,6 @@
 import ajax from 'Gb/utils/ajax'
 import Toast from 'Gb/components/Toast'
+import { replace } from 'react-router-redux'
 
 import {
   INIT_ORDER,
@@ -40,7 +41,7 @@ const fetchDetail = (id) => {
   }
 }
 
-// 订单审核与驳回
+// 订单审核与驳回, 发货
 const check = (id, type = 0, driver) => {
   const params = { id, type }
   if (driver) params.driver = driver
@@ -48,7 +49,23 @@ const check = (id, type = 0, driver) => {
     const data = await ajax.get(`${API.check}`, params)
     if (data) {
       Toast.success('操作成功')
-      dispatch(fetchDetail(id))
+      if (type === 6) {
+        dispatch(replace('/order'))
+      } else {
+        dispatch(fetchDetail(id))
+      }
+    }
+  }
+}
+
+// 录入快递单号
+const setDriverNo = (id, driverNo) => {
+  return async (dispatch) => {
+    const data = await ajax.post(API.driver, {
+      id, driverNo
+    })
+    if (data) {
+      Toast.success('单号录入成功')
     }
   }
 }
@@ -56,5 +73,6 @@ const check = (id, type = 0, driver) => {
 export default {
   fetchList,
   fetchDetail,
-  check
+  check,
+  setDriverNo
 }

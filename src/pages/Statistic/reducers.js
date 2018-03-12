@@ -1,5 +1,6 @@
 import {
-  INIT_STATISTIC
+  INIT_STATISTIC,
+  INIT_TEAM_STATISTIC
 } from './constains'
 
 const INITIAL_STATE = {
@@ -12,6 +13,11 @@ const statistic = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         data: action.data
+      }
+    case INIT_TEAM_STATISTIC:
+      return {
+        ...state,
+        team: action.data
       }
     default :
       return state

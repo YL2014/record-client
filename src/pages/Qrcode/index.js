@@ -18,7 +18,8 @@ class QrCodeAuth extends Component {
       Toast('证书页面地址错误')
       return
     }
-    const url = `http://${window.location.host}/useradd?id=${id}`
+    const redirectUrl = `http://${window.location.host}/useradd?id=${id}`
+    const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6866af98c236fb7a&redirect_uri=${encodeURIComponent(redirectUrl)}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
     await QRCode.toCanvas(this.canvasNode, url)
   }
 

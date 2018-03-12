@@ -1,10 +1,10 @@
 import axios from 'axios'
 // import qs from 'qs'
 import Toast from 'Gb/components/Toast'
+import Helper from './helper'
 
 axios.defaults = Object.assign(axios.defaults, {
-  baseURL: process.env.API_URL || 'http://127.0.0.1:7001',
-  // baseURL: 'http://192.168.0.102/7001',
+  baseURL: Helper.getBaseUrl(),
   timeout: 5000,
   withCredentials: true
 })
@@ -32,7 +32,7 @@ axios.interceptors.response.use(function (response) {
   }
   return data.data
 }, function (error) {
-  console.log(error, JSON.stringify(error))
+  // alert(error, JSON.stringify(error))
   Toast('网络异常，请稍后再试')
   return Promise.resolve(null)
 })
@@ -51,7 +51,7 @@ ajax.upload = (url, params, progressCallback) => {
     method: 'POST',
     url: url,
     data: params,
-    timeout: 2000,
+    timeout: 20000,
     headers: {
       'Content-Type': 'multipart/*'
     },

@@ -113,7 +113,7 @@ class Record extends Component {
       <div className={styles.record}>
         <CellsTitle>客户信息：</CellsTitle>
         <div className={styles.record_inputbox}>
-          <textarea className={styles.record_info} placeholder='填写或粘贴用户姓名，电话，收货地址，并用英文逗号隔开' rows='3' maxLength='200' value={customerInfo} onChange={this.writeInfo} />
+          <textarea className={styles.record_info} placeholder='填写或粘贴用户姓名，电话，收货地址，并用中文逗号隔开' rows='3' maxLength='200' value={customerInfo} onChange={this.writeInfo} />
         </div>
         <CellsTitle>选择商品：</CellsTitle>
         <div className={styles.record_goods}>

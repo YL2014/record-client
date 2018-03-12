@@ -15,6 +15,10 @@ const helper = {
       }
       return obj[param]
     }
+  },
+  getBaseUrl () {
+    return process.env.API_URL || 'http://127.0.0.1:7001'
+    // return 'http://api.ngrok.frontjs.cc'
   }
 }
 

@@ -7,7 +7,8 @@ export const API = {
   add: '/order/add',
   update: '/order/update',
   move: '/order/move',
-  check: '/order/check'
+  check: '/order/check',
+  driver: '/order/driver'
 }
 
 // 订单状态

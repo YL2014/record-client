@@ -37,9 +37,11 @@ import OrderDetail from 'Pages/Order/detail'
 import QrCode from 'Pages/Qrcode'
 
 import Statistic from 'Pages/Statistic'
+import Excel from 'Pages/Excel'
 
 const adminPath = ['/manage', '/goods', '/goodsadd', '/goodsdetail', '/goodsupdate',
-  '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck', '/ordercheck', '/usercheck', '/userchecks']
+  '/goodsremove', '/category', '/categoryadd', '/categoryupdate', '/ordercheck',
+  '/ordercheck', '/usercheck', '/userchecks', '/excel']
 const zongPath = ['/manage', '/ordercheck', '/usercheck', '/userchecks']
 
 // 权限认证
@@ -74,7 +76,7 @@ const Root = ({ store, history }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Base>
-        <PrivateRoute exact path='/' component={App} />
+        <Route exact path='/' component={App} />
         <PrivateRoute path='/login' component={Login} />
         <PrivateRoute path='/category' component={Category} />
         <PrivateRoute path='/categoryadd' component={CategoryAdd} />
@@ -94,6 +96,7 @@ const Root = ({ store, history }) => (
         <PrivateRoute path='/orderdetail' component={OrderDetail} />
         <PrivateRoute path='/qrcode' component={QrCode} />
         <PrivateRoute path='/statistic' component={Statistic} />
+        <PrivateRoute path='/excel' component={Excel} />
       </Base>
     </ConnectedRouter>
   </Provider>

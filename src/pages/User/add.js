@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import InputWithLabel from 'Gb/components/InputWithLabel'
 import { Cell, CellHeader, CellBody, CellFooter, Button } from 'react-weui'
 import Toast from 'Gb/components/Toast'
@@ -6,6 +8,7 @@ import Helper from 'Gb/utils/helper'
 import ajax from 'Gb/utils/ajax'
 import { API } from './constants'
 import ImageCompressor from 'image-compressor.js'
+import userActions from './actions'
 import styles from './index.scss'
 
 // 压缩图片
@@ -95,11 +98,15 @@ class UserAdd extends Component {
   // 设置boss
   setBoss () {
     const boss = Helper.getQueryParam('id')
+    const code = Helper.getQueryParam('code')
     if (!boss) {
       Toast('申请链接无效')
       return
     }
     this.setState({ boss })
+    // 授权
+    const { auth } = this.props.actions
+    auth && auth(code)
   }
 
   componentDidMount () {
@@ -146,4 +153,14 @@ class UserAdd extends Component {
   }
 }
 
-export default UserAdd
+// const mapStateToProps = ({ user }) => {
+//   return { user }
+// }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(userActions, dispatch)
+  }
+}
+
+export default connect(null, mapDispatchToProps)(UserAdd)
