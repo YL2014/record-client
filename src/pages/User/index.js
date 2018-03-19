@@ -5,6 +5,8 @@ import TabBar from 'Gb/components/TabBar'
 import { my, text, qr_code, group } from 'Gb/icons'
 import styles from './index.scss'
 
+const curUser = JSON.parse(localStorage.getItem('user'))
+
 class UserIndex extends Component {
   constructor () {
     super()
@@ -14,8 +16,7 @@ class UserIndex extends Component {
   }
 
   setRoleList (role) {
-    const curUser = JSON.parse(localStorage.getItem('user'))
-    const curUserId = curUser._id
+    const curUserId = curUser.id || curUser._id
     let dataSource = []
     let roleName = ''
     if (role === 1) {

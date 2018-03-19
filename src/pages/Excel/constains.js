@@ -1,3 +1,4 @@
 export const API = {
-  downExcel: '/order/download'
+  downExcel: '/order/download',
+  uploadExcel: '/order/import'
 }

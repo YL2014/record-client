@@ -49,13 +49,18 @@
     box-sizing: border-box;
     padding:10px 15px;
   }
-  &_goods :global .weui-cell__hd{
-    width: 90px;
-    height: 90px;
-    margin-right: 10px;
-    img{
-      width: 100%;
-      height: 100%;
+  &_goods :global {
+    .weui-cell {
+      padding: 10px 5px;
+    }
+    .weui-cell__hd{
+      width: 120px;
+      height: 120px;
+      margin-right: 10px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
     }
   }
   &_buygoods{
@@ -71,7 +76,8 @@
   }
 
   .goods_title {
-    height: 40px;
+    // height: 40px;
+    margin-bottom: 5px;
     line-height: 20px;
     overflow: hidden;
   }
@@ -82,7 +88,7 @@
     display: block;
   }
   .lprice{
-    text-decoration: line-through;
+    // text-decoration: line-through;
     font-size: 14px;
     color: #000;
   }

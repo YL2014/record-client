@@ -9,7 +9,6 @@ import orderActions from './actions'
 import styles from './index.scss'
 
 const curUser = JSON.parse(localStorage.getItem('user'))
-console.log(curUser)
 
 class OrderList extends Component {
   constructor () {
@@ -100,7 +99,8 @@ class OrderList extends Component {
         options: [
           { label: '待审核', value: 1 },
           { label: '已审核', value: 2 },
-          { label: '已发货', value: 3 }
+          { label: '已发货', value: 3 },
+          { label: '已驳回', value: 5 }
         ]
       })
     }
@@ -112,7 +112,8 @@ class OrderList extends Component {
             { label: '待审核', value: 0 },
             { label: '公司已审核', value: 2 },
             { label: '我已审核', value: 1 },
-            { label: '已发货', value: 3 }
+            { label: '已发货', value: 3 },
+            { label: '已驳回', value: 5 }
           ]
         })
       } else {
@@ -121,7 +122,8 @@ class OrderList extends Component {
           options: [
             { label: '待审核', value: 1 },
             { label: '已审核', value: 2 },
-            { label: '已发货', value: 3 }
+            { label: '已发货', value: 3 },
+            { label: '已驳回', value: 5 }
           ]
         })
       }
@@ -132,7 +134,9 @@ class OrderList extends Component {
         options: [
           { label: '待总代审核', value: 0 },
           { label: '待公司审核', value: 1 },
-          { label: '已审核', value: 2 }
+          { label: '已审核', value: 2 },
+          { label: '已发货', value: 3 },
+          { label: '已驳回', value: 5 }
         ]
       })
     }

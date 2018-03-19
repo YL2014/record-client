@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import InputWithLabel from 'Gb/components/InputWithLabel'
-import { Cell, CellHeader, CellBody, CellFooter, Button } from 'react-weui'
+import { Cell, CellHeader, CellBody, CellFooter, Button, LoadMore } from 'react-weui'
 import Toast from 'Gb/components/Toast'
 import Helper from 'Gb/utils/helper'
 import ajax from 'Gb/utils/ajax'
@@ -24,7 +24,8 @@ class UserAdd extends Component {
       idCard: '',
       idCardUpUrl: '',
       idCardDownUrl: '',
-      wx: ''
+      wx: '',
+      present: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
@@ -43,8 +44,8 @@ class UserAdd extends Component {
 
   // 提交申请
   async handleClick () {
-    const { username, telephone, idCard, idCardUpUrl, idCardDownUrl, wx, boss } = this.state
-    if (!(username && telephone && idCard && wx && idCardUpUrl && idCardDownUrl)) {
+    const { username, telephone, idCard, idCardUpUrl, wx, boss } = this.state
+    if (!(username && telephone && idCard && wx && idCardUpUrl)) {
       Toast('完善信息后再提交')
       return
     }
@@ -53,7 +54,7 @@ class UserAdd extends Component {
       return
     }
     const data = await ajax.post(API.add, {
-      username, telephone, idCard, wx, boss, idCardDownUrl, idCardUpUrl
+      username, telephone, idCard, wx, boss, idCardUpUrl
     })
     if (data) {
       Toast.success('提交成功')
@@ -73,25 +74,31 @@ class UserAdd extends Component {
   }
 
   // 上传图片
-  async uploadImg (type = 'up') {
+  async uploadImg () {
     let file = this.upFileNode.files[0]
     let curFile = 'idCardUpUrl'
-    if (type === 'down') {
-      file = this.downFileNode.files[0]
-      curFile = 'idCardDownUrl'
-    }
     if (file) {
+      this.setState({ present: '开始压缩图片' })
       const compressFile = await CompressorInstance.compress(file, { quality: .6 })
       if (!compressFile) {
         Toast('图片压缩失败')
+        this.setState({ present: '' })
         return
       }
+      this.setState({ present: '压缩成功，开始上传...' })
       const params = new FormData()
       params.append('file', compressFile, compressFile.name)
-      const data = await ajax.upload(API.upload, params)
+      const data = await ajax.upload(API.upload, params, (progressEvent) => {
+        const uploadPercentage = parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total), 10)
+        this.setState({ present: `上传${uploadPercentage}%` })
+      })
       if (data) {
+        Toast.success('上传成功')
         this.setState({ [curFile]: data.url })
+      } else {
+        // this.setState({ present: 0 })
       }
+      this.setState({ present: '' })
     }
   }
 
@@ -114,7 +121,7 @@ class UserAdd extends Component {
   }
 
   render () {
-    const { username, telephone, idCard, idCardUpUrl, idCardDownUrl, wx, boss } = this.state
+    const { username, telephone, idCard, idCardUpUrl, idCardDownUrl, wx, boss, present } = this.state
     const { state } = this.props.location
     if (!boss) return null
     return <div className={styles.useradd}>
@@ -134,21 +141,15 @@ class UserAdd extends Component {
             { idCardUpUrl && <img className={styles.useradd_upload_img} src={idCardUpUrl} alt='upload' /> }
           </CellFooter>
         </Cell>
-        <Cell>
-          <CellHeader>身份证反面照</CellHeader>
-          <CellBody className={styles.useradd_upload}>
-            <div className='weui-uploader__input-box'>
-              <input ref={(node) => {this.downFileNode = node}} className='weui-uploader__input' type="file" onChange={this.uploadImg.bind(this, 'down')} accept='image/*'/>
-            </div>
-          </CellBody>
-          <CellFooter>
-            { idCardDownUrl && <img className={styles.useradd_upload_img} src={idCardDownUrl} alt='upload' /> }
-          </CellFooter>
-        </Cell>
       </div>
       <div className={styles.useradd_btn}>
         <Button onClick={this.handleClick}>{state ? '确认' : '提交申请'}</Button>
       </div>
+      {
+        present && <div className={styles.useradd_loading} onClick={(e) => { e.stopPropagation(); return false }}>
+          <LoadMore loading>{present}</LoadMore>
+        </div>
+      }
     </div>
   }
 }

@@ -32,9 +32,10 @@ class Record extends Component {
         title: <div>
           <p className={styles.goods_title}>{item.name}</p>
           <div className={styles.showprice} >
-            <span className={styles.lprice}>￥{item.lprice}</span>
+            <span className={styles.lprice}>零售价 ￥{item.lprice}</span>
             <span className={styles.realprice}>￥{ rank.role === 3 ? item.tprice : item.zprice}</span>
           </div>
+          <p>规格: {item.apply}</p>
         </div>,
         icon: item.image,
         desc: <div className={styles.record_numbox} >
@@ -80,6 +81,10 @@ class Record extends Component {
       return
     }
     const [ name, phone, address ] = cusInfo.split('，')
+    if (name.length > 10) {
+      Toast('客户名称不能超过10个字')
+      return
+    }
     if (!Helper.reg.telephone.test(phone) && !Helper.reg.telephone.test(address)) {
       Toast('手机号码格式不正确')
     } else {

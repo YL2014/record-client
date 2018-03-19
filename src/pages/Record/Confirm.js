@@ -62,6 +62,7 @@ class Confirm extends Component {
             {/* <del className={styles.lprice}>￥{item.lprice}</del> */}
             <span className={styles.realprice}>￥{ rank.role === 3 ? item.tprice : item.zprice}</span>
           </div>
+          <p>规格: {item.apply}</p>
         </div>,
         icon: item.image,
         desc: <div className={styles.record_numbox}>x{item.num}</div>

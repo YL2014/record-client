@@ -32,7 +32,7 @@ axios.interceptors.response.use(function (response) {
   }
   return data.data
 }, function (error) {
-  // alert(error, JSON.stringify(error))
+  alert(error, JSON.stringify(error))
   Toast('网络异常，请稍后再试')
   return Promise.resolve(null)
 })
@@ -41,22 +41,23 @@ const ajax = {}
 
 // 文件上传
 ajax.upload = (url, params, progressCallback) => {
-  // return axios.post(url, params, {
-  //   headers: {
-  //     'Content-Type': 'multipart/form-data'
-  //   },
-  //   timeout: 10000
-  // })
-  return axios({
-    method: 'POST',
-    url: url,
-    data: params,
-    timeout: 20000,
+  return axios.post(url, params, {
     headers: {
-      'Content-Type': 'multipart/*'
+      'Content-Type': 'multipart/form-data'
     },
+    timeout: 50000,
     onUploadProgress: progressCallback
   })
+  // return axios({
+  //   method: 'POST',
+  //   url: url,
+  //   data: params,
+  //   timeout: 50000,
+  //   headers: {
+  //     'Content-Type': 'multipart/*'
+  //   },
+  //   onUploadProgress: progressCallback
+  // })
 }
 
 ajax.get = (url, params) => {

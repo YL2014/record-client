@@ -62,7 +62,6 @@ const uploadImg = (file, status) => {
       params.append('file', compressFile, compressFile.name)
       const data = await ajax.upload(API.upload, params, (progressEvent) => {
         let precent = Math.round(progressEvent.loaded * 100 / progressEvent.total)
-        console.log(precent)
         if (precent % 5 === 0) {
           dispatch({
             type: SET_UPLOAD_PROGRESS,

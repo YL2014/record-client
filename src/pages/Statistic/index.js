@@ -5,9 +5,11 @@ import InputWithLabel from 'Gb/components/InputWithLabel'
 import List from 'Gb/components/List'
 import { CellsTitle } from 'react-weui'
 import statisticActions from './actions'
+import math from 'Gb/utils/math'
+import styles from './index.scss'
 import moment from 'moment'
 
-import styles from './index.scss'
+const curUser = JSON.parse(localStorage.getItem('user'))
 
 class StatisticComponent extends Component {
   constructor () {
@@ -32,14 +34,24 @@ class StatisticComponent extends Component {
     }, this.getStatistic)
   }
 
+  formatDate (dateObj, type) {
+    return type === 'start' ?
+      `${dateObj} 00:00:00` :
+      `${dateObj} 23:59:59`
+  }
+
   // 获取统计数据
   getStatistic () {
     const { role } = JSON.parse(localStorage.getItem('user'))
-    const { startTime, endTime } = this.state
+    let { startTime, endTime } = this.state
+    // if (startTime) startTime = moment(startTime + ' 00:00:00').format()
+    // if (endTime) endTime = moment(endTime + ' 23:59:59').format()
+    if (startTime) startTime = startTime + ' 00:00:00'
+    if (endTime) endTime = endTime + ' 23:59:59'
     const { fetchStatistic } = this.props.actions
     fetchStatistic && fetchStatistic({
-      startTime: startTime ? startTime + ' 00:00:00' : startTime,
-      endTime: endTime ? endTime + ' 23:59:59' : endTime
+      startTime,
+      endTime
     })
     if (role === 2) {
       this.getTeamStatistic()
@@ -48,10 +60,13 @@ class StatisticComponent extends Component {
 
   // 获取团队统计数据
   getTeamStatistic () {
-    const { startTime, endTime } = this.state
+    let { startTime, endTime } = this.state
     const { fetchTeamStatistic } = this.props.actions
+    if (startTime) startTime = startTime + ' 00:00:00'
+    if (endTime) endTime = endTime + ' 23:59:59'
     fetchTeamStatistic && fetchTeamStatistic({
-      startTime, endTime
+      startTime,
+      endTime
     })
   }
 
@@ -86,7 +101,6 @@ class StatisticComponent extends Component {
         })
       }
       </div>
-      
     </div>
   }
 
@@ -116,15 +130,19 @@ class StatisticComponent extends Component {
     const { team } = this.props.statistic
     const { data } = this.props.statistic
     let totalProfit = 0
+    let ztotal = 0
     if (data) {
-      totalProfit += data.totalProfit
+      // totalProfit += data.totalProfit
+      totalProfit  = math.add(totalProfit, data.totalProfit)
+      ztotal = math.add(ztotal, data.ztotal)
     }
     if (team) {
       team.map(item => {
-        totalProfit += item.statistic.totalProfit
+        totalProfit  = math.add(totalProfit, item.statistic.totalProfit)
+        ztotal = math.add(ztotal, item.statistic.ztotal)
       })
     }
-    const dataSource = [{ title: '总利润', desc: totalProfit }]
+    const dataSource = [{ title: '总金额', desc: ztotal }, { title: '总利润', desc: totalProfit }]
     return totalProfit > 0 ? <List className={styles.statistic_totalprofit} dataSource={dataSource} /> : null
   }
 
@@ -139,7 +157,7 @@ class StatisticComponent extends Component {
       <InputWithLabel label='开始时间' name='startTime' value={startTime} onChange={this.setSearchTime} type='date' />
       <InputWithLabel label='结束时间' name='endTime' value={endTime} onChange={this.setSearchTime} type='date' />
     </div>
-    {this.renderTotalProfit()}
+    {curUser.role < 3 && this.renderTotalProfit()}
     {this.renderStatistic()}
     {this.renderMembers()}
     {this.renderTeamItem()}

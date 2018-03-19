@@ -10,8 +10,8 @@
 
 .orderdetail {
   :global .gb_list_icon {
-    width: 90px;
-    height: 90px;
+    width: 120px;
+    height: 120px;
     margin-right: 10px;
   }
 
@@ -48,6 +48,17 @@
   }
 
   &_driver {
+    background-color: #fff;
+  }
+
+  &_drivertrue {
+    input {
+      text-align: right;
+    }
+  }
+
+  &_rmsg {
+    border-top: 1px solid #e5e5e5;
     background-color: #fff;
   }
 }

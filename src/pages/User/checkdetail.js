@@ -23,8 +23,7 @@ class CheckDetail extends Component {
       { title: '微信号', desc: state.wx },
       { title: '手机号', desc: state.telephone },
       { title: '身份证号', desc: state.idCard },
-      { title: '身份证正面照片', desc: <img className={styles.checkdetail_img} src={state.idCardUpUrl} alt='idCard' /> },
-      { title: '身份证反面照片', desc: <img className={styles.checkdetail_img} src={state.idCardDownUrl} alt='idCard' /> }
+      { title: '身份证正面照片', desc: <img className={styles.checkdetail_img} src={state.idCardUpUrl} alt='idCard' /> }
     ]
     return dataSource
   }

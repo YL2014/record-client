@@ -1,6 +1,7 @@
 const helper = {
   reg: {
-    telephone: /^1[34578][0-9]{9}$/
+    // telephone: /^1[34578][0-9]{9}$/
+    telephone: /^\d{5,11}$/
   },
   // 获取地址里的query param
   getQueryParam (param) {

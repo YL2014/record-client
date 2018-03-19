@@ -42,17 +42,15 @@ const fetchDetail = (id) => {
 }
 
 // 订单审核与驳回, 发货
-const check = (id, type = 0, driver) => {
-  const params = { id, type }
-  if (driver) params.driver = driver
+const check = (params) => {
   return async (dispatch) => {
     const data = await ajax.get(`${API.check}`, params)
     if (data) {
       Toast.success('操作成功')
-      if (type === 6) {
+      if (params.type === 6) {
         dispatch(replace('/order'))
       } else {
-        dispatch(fetchDetail(id))
+        dispatch(fetchDetail(params.id))
       }
     }
   }
