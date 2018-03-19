@@ -75,9 +75,7 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
-        // API_URL: process.env.NODE_ENV === 'development' ? "http://127.0.0.1:7001" : "http://api.hanfeiguoyuan.top"
-        API_URL: process.env.NODE_ENV === 'development' ? "http://127.0.0.1:7001" :
-          process.env.BUILD_TYPE === 'test' ? "http://apitest.hanfeiguoyuan.top" : "http://api.hanfeiguoyuan.top"
+        API_URL: process.env.NODE_ENV === 'development' ? "http://127.0.0.1:7001" : "http://api.hanfeiapi.ngrok.frontjs.cc"
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
